@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
         min: 3,
         max: 30
     },
-    userName: {
+    username: {
         type: String,
         required: true,
         trim: true,
@@ -38,7 +38,7 @@ const userSchema = new mongoose.Schema({
     role: {
         type: String,
         enum: ['user', 'admin'],
-        default: 'admin'
+        default: 'user'
     },
     contactNumber: { type: String },
     profilePicture: { type: String },
