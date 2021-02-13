@@ -1,10 +1,23 @@
 const express = require('express');
 const env = require('dotenv');
 const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
 
 
 const app = express();
 env.config();
+
+
+//Mongodb Connectivity
+mongoose.connect(
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.3uivu.mongodb.net/${process.env.MONGODB_DATABASENAME}?retryWrites=true&w=majority`,
+    {
+        useNewUrlParser: true,
+        useUnifiedTopology: true,
+    }
+).then(() => {
+    console.log('Mongodb Database Connected');
+}).catch((error) => console.log(error.message));
 
 
 //Middlewares
