@@ -12,9 +12,10 @@
 - npm i dotenv 
 - npm i express 
 - npm i express-fileupload 
+- npm i express-validator 
 - npm i jsonwebtoken 
 - npm i mongoose
-- npm i -D nodemon
+- npm i body-parser
 
 
 ###### MONGODB

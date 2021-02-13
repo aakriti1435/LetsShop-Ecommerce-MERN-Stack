@@ -1,8 +1,9 @@
-const express = require('express');
-const env = require('dotenv');
-const bodyParser = require('body-parser');
-const mongoose = require('mongoose');
-
+import express from 'express';
+import bodyParser from 'body-parser';
+import env from 'dotenv';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import userRoutes from './routes/user.js';
 
 const app = express();
 env.config();
@@ -21,8 +22,12 @@ mongoose.connect(
 
 
 //Middlewares
-app.use(express.json());
-// app.use(bodyParser());
+// app.use(express.json());
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded());
+app.use(cors());
+
+app.use('/api', userRoutes);
 
 
 //API Calls
