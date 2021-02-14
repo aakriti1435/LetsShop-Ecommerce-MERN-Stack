@@ -42,16 +42,20 @@ const userSchema = new mongoose.Schema({
     },
     contactNumber: { type: String },
     profilePicture: { type: String },
-}, {timestamps: true});
+}, { timestamps: true });
 
 //Hashing the password
-userSchema.virtual('password').set(function(password){
+userSchema.virtual('password').set(function(password) {
     this.hashPassword = bcrypt.hashSync(password, 10);
 });
 
+userSchema.virtual('fullName').get(function() {
+    return `${this.firstName} ${this.lastName}`
+})
+
 userSchema.methods = {
-    authenticate: function(){
-        return bcrypt.compare(password, this.hashPassword);
+    authenticate: function() {
+        return bcrypt.compareSync(password, this.hashPassword);
     }
 };
 

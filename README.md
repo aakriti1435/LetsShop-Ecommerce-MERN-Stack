@@ -16,7 +16,7 @@
 - npm i jsonwebtoken 
 - npm i mongoose
 - npm i body-parser
-
+- npm i shortid
 
 ###### MONGODB
 - letsshop
