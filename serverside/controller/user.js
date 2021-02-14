@@ -1,15 +1,17 @@
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
 
-export const signIn = async(req, res) => {
-    User.findOne({ email: req.body.email }).exec((error, user) => {
+export const signIn = (req, res) => {
+    User.findOne({ email: req.body.email }).exec(async(error, user) => {
         if (error) {
             return res.status(400).json({ error });
         };
 
         if (user) {
-            if (user.authenticate(req.body.password)) {
-                const token = jwt.sign({ _id: user._id }, process.env.JWT_SECRET, { expiresIn: '1h' });
+            const isPassword = await user.authenticate(req.body.password);
+            console.log(isPassword);
+            if (isPassword && user.role === "user") {
+                const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
                 const { firstName, lastName, email, role, fullName } = user;
                 res.status(200).json({
                     token,
