@@ -1,9 +1,14 @@
-### CliendSide
+### CliendSide dependencies
 - npm i react-router-dom 
 - npm i axios 
 - npm i react-paypal-express-checkout
 
-### ServerSide
+### Admin Panel dependencies
+- npm i react-bootstrap
+- npm i bootstrap
+- npm i react-router-dom
+
+### ServerSide dependencies
 - npm i bcrypt 
 - npm i cloudinary 
 - npm i cookie-parser 
