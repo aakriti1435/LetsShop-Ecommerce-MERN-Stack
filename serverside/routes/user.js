@@ -1,5 +1,5 @@
 import express from 'express';
-import { signUp, signIn, requireSignIn } from '../controller/user.js';
+import { signUp, signIn } from '../controller/user.js';
 import { validateSignUpRequest, validateSignInRequest, isRequestValidated } from "../validators/user.js";
 
 const router = express.Router();
