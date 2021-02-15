@@ -10,8 +10,8 @@ function SignIn() {
                 <Row style={{ marginTop: '50px' }}>
                     <Col md={{ span: 6, offset: 3 }}>
                         <Form>
-                            <Input label="Email Address" type="email" placeholder="Email Address" />
-                            <Input label="Password" type="password" placeholder="Password" />
+                            <Input value="" onChange={() => { }} label="Email Address" type="email" placeholder="Email Address" />
+                            <Input value="" onChange={() => { }} label="Password" type="password" placeholder="Password" />
                             <Button variant="primary" type="submit">Submit</Button>
                         </Form>
                     </Col>
