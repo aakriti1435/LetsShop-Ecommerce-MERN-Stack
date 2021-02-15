@@ -4,7 +4,7 @@ import { addCategory, getCategories } from '../controller/category.js';
 
 const router = express.Router();
 
-router.post('/category/create', addCategory);
+router.post('/category/create', requireSignIn, adminMiddleware, addCategory);
 
 router.get('/category/getCategory', getCategories);
 
