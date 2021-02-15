@@ -9,13 +9,13 @@ export const signIn = (req, res) => {
 
         if (user) {
             const isPassword = await user.authenticate(req.body.password);
-            console.log(isPassword);
-            if (isPassword && user.role === "user") {
+            if (isPassword) {
                 const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                const { firstName, lastName, email, role, fullName } = user;
+                const { _id, firstName, lastName, email, role, fullName } = user;
                 res.status(200).json({
                     token,
                     user: {
+                        _id,
                         firstName,
                         lastName,
                         email,
@@ -55,4 +55,11 @@ export const signUp = async(req, res) => {
             }
         });
     });
+};
+
+export const requireSignIn = (req, res, next) => {
+    const token = req.headers.authorization.split(" ")[1];
+    const user = jwt.verify(token, process.env.JWT_SECRET);
+    req.user = user;
+    next();
 };
