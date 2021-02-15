@@ -7,8 +7,5 @@ router.post('/signIn', signIn);
 
 router.post('/signUp', signUp);
 
-router.post('/profile', requireSignIn, (req, res) => {
-    res.status(200).json({ user: 'profile' })
-});
 
 export default router;

@@ -4,6 +4,7 @@ import env from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import userRoutes from '../routes/user.js';
+import adminRoutes from '../routes/admin/user.js';
 
 const app = express();
 env.config();
@@ -11,8 +12,7 @@ env.config();
 
 //Mongodb Connectivity
 mongoose.connect(
-    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.3uivu.mongodb.net/${process.env.MONGODB_DATABASENAME}?retryWrites=true&w=majority`,
-    {
+    `mongodb+srv://${process.env.MONGODB_USER}:${process.env.MONGODB_PASSWORD}@cluster0.3uivu.mongodb.net/${process.env.MONGODB_DATABASENAME}?retryWrites=true&w=majority`, {
         useNewUrlParser: true,
         useUnifiedTopology: true,
         useCreateIndex: true,
@@ -24,11 +24,12 @@ mongoose.connect(
 
 //Middlewares
 // app.use(express.json());
-app.use(bodyParser.json({limit: '30mb', extended: true}));
-app.use(bodyParser.urlencoded({limit: '30mb', extended: true}));
+app.use(bodyParser.json({ limit: '30mb', extended: true }));
+app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());
 
 app.use('/api', userRoutes);
+app.use('/api', adminRoutes);
 
 
 //API Calls
