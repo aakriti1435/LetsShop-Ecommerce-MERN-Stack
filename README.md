@@ -22,6 +22,8 @@
 - npm i mongoose
 - npm i body-parser
 - npm i shortid
+- npm i slugify
+- npm i multer
 
 ###### MONGODB
 - letsshop

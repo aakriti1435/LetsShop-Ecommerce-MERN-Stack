@@ -3,9 +3,10 @@ import bodyParser from 'body-parser';
 import env from 'dotenv';
 import mongoose from 'mongoose';
 import cors from 'cors';
-import userRoutes from '../routes/user.js';
-import adminRoutes from '../routes/admin/user.js';
-import categoryRoutes from '../routes/category.js';
+import userRoutes from './routes/user.js';
+import adminRoutes from './routes/admin/user.js';
+import categoryRoutes from './routes/category.js';
+import productRoutes from './routes/product.js';
 
 const app = express();
 env.config();
@@ -32,6 +33,7 @@ app.use(cors());
 app.use('/api', userRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', categoryRoutes);
+app.use('/api', productRoutes);
 
 
 //API Calls
