@@ -22,9 +22,14 @@ const createCategories = (categories, parentId = null) => {
 }
 
 export const addCategory = (req, res) => {
+
     const categoryObj = {
         name: req.body.name,
         slug: slugify(req.body.name)
+    };
+
+    if (req.file) {
+        categoryObj.categoryImage = process.env.BASEURL + '/public/' + req.file.filename;
     };
 
     if (req.body.parentId) {

@@ -8,6 +8,7 @@ import adminRoutes from './routes/admin/user.js';
 import categoryRoutes from './routes/category.js';
 import productRoutes from './routes/product.js';
 import cartRoutes from './routes/cart.js';
+import path from 'path';
 
 const app = express();
 env.config();
@@ -27,6 +28,7 @@ mongoose.connect(
 
 //Middlewares
 app.use(express.json());
+app.use('/public', express.static('./src/uploads'));
 app.use(bodyParser.json({ limit: '30mb', extended: true }));
 app.use(bodyParser.urlencoded({ limit: '30mb', extended: true }));
 app.use(cors());

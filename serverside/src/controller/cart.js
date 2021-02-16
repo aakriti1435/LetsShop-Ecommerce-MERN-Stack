@@ -17,6 +17,7 @@ export const addItemToCart = (req, res) => {
 
             if (isItemPresent) {
                 //Item already present in cart - update the quantity
+
                 condition = { "user": req.user._id, "cartItems.product": product };
                 action = {
                     //updating record in Sub collection 
@@ -30,6 +31,7 @@ export const addItemToCart = (req, res) => {
                 };
             } else {
                 //Item not present in cart - then add the item
+
                 condition = { user: req.user._id };
                 action = {
                     //Pushing record in Sub collection
@@ -45,8 +47,7 @@ export const addItemToCart = (req, res) => {
 
                 if (_cart)
                     return res.status(201).json({ cart: _cart });
-            })
-
+            });
 
         } else {
             //Creating new cart

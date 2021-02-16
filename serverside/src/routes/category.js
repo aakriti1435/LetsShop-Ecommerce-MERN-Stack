@@ -1,10 +1,10 @@
 import express from 'express';
-import { requireSignIn, adminMiddleware } from '../common-middlewares/index.js';
+import { requireSignIn, adminMiddleware, upload } from '../common-middlewares/index.js';
 import { addCategory, getCategories } from '../controller/category.js';
 
 const router = express.Router();
 
-router.post('/category/create', requireSignIn, adminMiddleware, addCategory);
+router.post('/category/create', requireSignIn, upload.single('categoryImg'), addCategory);
 
 router.get('/category/getCategory', getCategories);
 
