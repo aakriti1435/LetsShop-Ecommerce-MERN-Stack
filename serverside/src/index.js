@@ -7,6 +7,7 @@ import userRoutes from './routes/user.js';
 import adminRoutes from './routes/admin/user.js';
 import categoryRoutes from './routes/category.js';
 import productRoutes from './routes/product.js';
+import cartRoutes from './routes/cart.js';
 
 const app = express();
 env.config();
@@ -34,6 +35,7 @@ app.use('/api', userRoutes);
 app.use('/api', adminRoutes);
 app.use('/api', categoryRoutes);
 app.use('/api', productRoutes);
+app.use('/api', cartRoutes);
 
 
 //API Calls
