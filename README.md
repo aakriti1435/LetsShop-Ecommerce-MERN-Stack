@@ -7,6 +7,9 @@
 - npm i react-bootstrap
 - npm i bootstrap
 - npm i react-router-dom
+- npm i redux
+- npm i react-redux
+- npm i redux-thunk
 
 ### ServerSide dependencies
 - npm i bcrypt 
