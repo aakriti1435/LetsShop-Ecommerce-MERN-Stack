@@ -24,7 +24,7 @@ function SignIn() {
 
     if (user.authenticate) {
         return <Redirect to={`/`} />
-    }
+    };
 
     return (
         <Layout>
