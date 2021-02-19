@@ -1,4 +1,4 @@
-import { authConstants } from "../actions/constants";
+import { loginConstants, registerConstants } from "../actions/constants";
 
 const initialState = {
     token: null,
@@ -12,19 +12,20 @@ const initialState = {
     authenticating: false,
     error: null,
     message: '',
+    loading: false
 };
 
 export default (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
-        case authConstants.LOGIN_REQUEST:
+        case loginConstants.LOGIN_REQUEST:
             state = {
                 ...state,
                 authenticating: true,
             };
             break;
 
-        case authConstants.LOGIN_SUCCESS:
+        case loginConstants.LOGIN_SUCCESS:
             state = {
                 ...state,
                 user: action.payload.user,
@@ -34,17 +35,41 @@ export default (state = initialState, action) => {
             };
             break;
 
-        case authConstants.LOGIN_FAILURE:
+        case loginConstants.LOGIN_FAILURE:
             state = {
                 ...state,
-                error: action.payload.error
+                error: action.payload.error,
+                loading: false
             };
             break;
 
-        case authConstants.LOGOUT_REQUEST:
+        case loginConstants.LOGOUT_REQUEST:
             state = {
                 ...initialState
-            }
+            };
+            break;
+
+        case registerConstants.REGISTRATION_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            };
+            break;
+
+        case registerConstants.REGISTRATION_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+                message: action.payload.message
+            };
+            break;
+
+        case registerConstants.REGISTRATION_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+                loading: false
+            };
             break;
     }
     return state;

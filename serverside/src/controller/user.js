@@ -1,5 +1,6 @@
 import User from '../models/user.js';
 import jwt from 'jsonwebtoken';
+import shortid from 'shortid';
 
 export const signIn = (req, res) => {
     User.findOne({ email: req.body.email }).exec(async(error, user) => {
@@ -39,7 +40,7 @@ export const signUp = async(req, res) => {
         };
 
         const { firstName, lastName, email, password } = req.body;
-        const _user = new User({ firstName, lastName, email, password, username: Math.random().toString() });
+        const _user = new User({ firstName, lastName, email, password, username: shortid.generate(), });
 
         _user.save((error, data) => {
             if (error) {
