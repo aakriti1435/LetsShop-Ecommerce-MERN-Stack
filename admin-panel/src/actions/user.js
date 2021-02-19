@@ -4,7 +4,7 @@ export const login = (user) => {
     return (dispatch) => {
         dispatch({
             type: authConstants.LOGIN_REQUEST,
-            payload: { login: true }
+            payload: {...user }
         });
     }
 };
