@@ -1,8 +1,27 @@
 import React from 'react';
 import { Navbar, Nav, NavDropdown, Container } from "react-bootstrap";
 import { NavLink, Link } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
+import { signout } from '../../actions/user';
 
 function Header() {
+
+    const dispatch = useDispatch();
+    const user = useSelector((state) => state.auth);
+
+    const logout = () => {
+        dispatch(signout());
+    };
+
+    const SignOutLink = () => {
+        return (
+            <Nav>
+                <li className="nav-item">
+                    <span className="nav-link" onClick={logout}>SignOut</span>
+                </li>
+            </Nav>
+        )
+    };
 
     const SignInSignUpLinks = () => {
         return (
@@ -22,10 +41,10 @@ function Header() {
             <Container fluid>
                 <Link to='/' className="navbar-brand">Admin Dashboard</Link>
                 <Navbar.Toggle aria-controls="responsive-navbar-nav" />
-                <Navbar.Collapse id="responsive-navbar-nav">
+                <Navbar.Collapse id="responsive-navbar-nav" style={{ cursor: 'pointer' }}>
                     <Nav className="mr-auto">
                     </Nav>
-                    <SignInSignUpLinks />
+                    {user.authenticate ? <SignOutLink /> : <SignInSignUpLinks />}
                 </Navbar.Collapse>
             </Container>
         </Navbar>

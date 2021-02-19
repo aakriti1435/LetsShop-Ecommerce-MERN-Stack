@@ -40,6 +40,12 @@ export default (state = initialState, action) => {
                 error: action.payload.error
             };
             break;
+
+        case authConstants.LOGOUT_REQUEST:
+            state = {
+                ...initialState
+            }
+            break;
     }
     return state;
 };
