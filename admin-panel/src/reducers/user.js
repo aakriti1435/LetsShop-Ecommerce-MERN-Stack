@@ -11,9 +11,10 @@ const initialState = {
     authenticate: false,
     authenticating: false,
     error: null,
+    message: '',
 };
 
-export default (state = {}, action) => {
+export default (state = initialState, action) => {
     console.log(action)
     switch (action.type) {
         case authConstants.LOGIN_REQUEST:
