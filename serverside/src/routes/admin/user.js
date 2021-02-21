@@ -9,7 +9,7 @@ router.post('/admin/signIn', validateSignInRequest, isRequestValidated, signIn);
 
 router.post('/admin/signUp', validateSignUpRequest, isRequestValidated, signUp);
 
-router.post('/admin/signOut', requireSignIn, signOut);
+router.post('/admin/signOut', signOut);
 
 
 export default router;

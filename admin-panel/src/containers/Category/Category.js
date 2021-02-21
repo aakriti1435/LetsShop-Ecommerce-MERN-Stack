@@ -1,9 +1,18 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
+import { getAllCategories } from '../../actions/actions';
 import Layout from '../../components/Layout/Layout';
 import './Category.css';
 
 function Category() {
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(getAllCategories());
+    }, []);
+
     return (
         <Layout sidebar>
             <Container>
