@@ -4,7 +4,7 @@ import { addCategory, getCategories } from '../controller/category.js';
 
 const router = express.Router();
 
-router.post('/category/create', requireSignIn, upload.single('categoryImg'), addCategory);
+router.post('/category/create', upload.single('categoryImg'), addCategory);
 
 router.get('/category/getCategory', getCategories);
 

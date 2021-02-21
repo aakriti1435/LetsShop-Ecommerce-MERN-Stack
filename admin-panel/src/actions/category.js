@@ -1,6 +1,14 @@
 import { categoryConstants } from "./constants"
 import axios from '../helpers/axios';
 
+export const addCategory = (form) => {
+    return async(dispatch) => {
+
+        const res = await axios.post(`/category/create`, form);
+        console.log(res);
+    }
+};
+
 export const getAllCategories = () => {
     return async(dispatch) => {
 

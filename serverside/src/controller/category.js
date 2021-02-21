@@ -19,7 +19,7 @@ const createCategories = (categories, parentId = null) => {
         });
     };
     return categoryList;
-}
+};
 
 export const addCategory = (req, res) => {
 
