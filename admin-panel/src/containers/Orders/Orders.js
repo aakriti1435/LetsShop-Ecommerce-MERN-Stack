@@ -1,10 +1,11 @@
 import React from 'react';
 import Layout from '../../components/Layout/Layout';
 
-function Home() {
+
+function Orders() {
     return (
         <Layout sidebar></Layout>
-    )
+    );
 }
 
-export default Home;
+export default Orders;
