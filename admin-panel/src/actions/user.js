@@ -8,6 +8,7 @@ export const signup = (user) => {
         });
 
         const res = await axios.post(`/admin/signUp`, {...user });
+        console.log(res);
 
         if (res.status === 201) {
             const { message } = res.data;
@@ -80,9 +81,20 @@ export const isUserLoggedIn = () => {
 
 export const signout = () => {
     return async dispatch => {
-        localStorage.clear();
-        dispatch({
-            type: loginConstants.LOGOUT_REQUEST
-        });
+
+        dispatch({ type: loginConstants.LOGOUT_REQUEST });
+
+        const res = await axios.post(`/admin/signOut`);
+        console.log(res);
+
+        if (res.status === 200) {
+            localStorage.clear();
+            dispatch({ type: loginConstants.LOGOUT_SUCCESS });
+        } else {
+            dispatch({
+                type: loginConstants.LOGOUT_FAILURE,
+                payload: { error: res.data.error }
+            });
+        }
     }
 };

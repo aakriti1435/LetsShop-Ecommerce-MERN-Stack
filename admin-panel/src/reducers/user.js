@@ -43,12 +43,6 @@ export default (state = initialState, action) => {
             };
             break;
 
-        case loginConstants.LOGOUT_REQUEST:
-            state = {
-                ...initialState
-            };
-            break;
-
         case registerConstants.REGISTRATION_REQUEST:
             state = {
                 ...state,
@@ -69,6 +63,27 @@ export default (state = initialState, action) => {
                 ...state,
                 error: action.payload.error,
                 loading: false
+            };
+            break;
+
+        case loginConstants.LOGOUT_REQUEST:
+            state = {
+                ...state,
+                loading: true
+            };
+            break;
+
+        case loginConstants.LOGOUT_SUCCESS:
+            state = {
+                ...initialState,
+            };
+            break;
+
+        case loginConstants.LOGOUT_FAILURE:
+            state = {
+                ...state,
+                error: action.payload.error,
+                loading: false,
             };
             break;
     }
