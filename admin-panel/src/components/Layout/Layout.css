@@ -29,6 +29,7 @@
     box-sizing: border-box;
     margin: 5px 10px 5px 10px;
     text-decoration: none;
+    border-radius: 5px;
 }
 
 .sidebar ul li a.active {
