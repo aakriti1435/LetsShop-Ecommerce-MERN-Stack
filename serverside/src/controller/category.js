@@ -7,7 +7,7 @@ const createCategories = (categories, parentId = null) => {
     if (parentId == null) {
         category = categories.filter((cat) => cat.parentId == undefined);
     } else {
-        category = categories.filter((cat) => cat.parentId == parentId)
+        category = categories.filter((cat) => cat.parentId == parentId);
     };
 
     for (let c of category) {
@@ -15,6 +15,8 @@ const createCategories = (categories, parentId = null) => {
             _id: c._id,
             name: c.name,
             slug: c.slug,
+            parentId: c.parentId,
+            type: c.type,
             children: createCategories(categories, c._id)
         });
     };
@@ -25,7 +27,7 @@ export const addCategory = (req, res) => {
 
     const categoryObj = {
         name: req.body.name,
-        slug: slugify(req.body.name)
+        slug: slugify(req.body.name),
     };
 
     if (req.file) {
