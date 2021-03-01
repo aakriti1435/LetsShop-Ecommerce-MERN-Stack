@@ -10,6 +10,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Products from './containers/Products/Products';
 import Orders from './containers/Orders/Orders';
 import Category from './containers/Category/Category';
+import { getAllCategories } from "./actions/actions";
 
 function App() {
 
@@ -19,6 +20,8 @@ function App() {
     useEffect(() => {
         if (!user.authenticate)
             dispatch(isUserLoggedIn());
+        
+        dispatch(getAllCategories());
     }, []);
 
     return (
