@@ -22,11 +22,8 @@ function Products() {
     const [productPictures, setProductPictures] = useState([]);
 
     const category = useSelector((state) => state.category);
+    const product = useSelector((state) => state.product);
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(getAllCategories());
-    }, []);
 
     const handleClose = () => {
         const form = new FormData();
@@ -93,14 +90,18 @@ function Products() {
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td>Hey</td>
-                        <td>Hey</td>
-                        <td>Hey</td>
-                        <td>Hey</td>
-                        <td>Hey</td>
-                        <td>Hey</td>
-                    </tr>
+                    {product.products.length > 0
+                        ? product.products.map((p) => (
+                              <tr key={p._id}>
+                                  <td>{p._id}</td>
+                                  <td>{p.name}</td>
+                                  <td>{p.price}</td>
+                                  <td>{p.quantity}</td>
+                                  <td>hey</td>
+                                  <td>hey</td>
+                              </tr>
+                          ))
+                        : null}
                 </tbody>
             </Table>
         );
