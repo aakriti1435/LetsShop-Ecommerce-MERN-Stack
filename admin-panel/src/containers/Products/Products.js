@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { Container, Row, Col } from "react-bootstrap";
+import { Container, Row, Col, Table } from "react-bootstrap";
 import { useDispatch, useSelector } from "react-redux";
 import {
     addCategory,
@@ -78,7 +78,33 @@ function Products() {
     const handleProductImages = (e) => {
         setProductPictures([...productPictures, e.target.files[0]]);
     };
-    console.log(productPictures);
+
+    const renderProducts = () => {
+        return (
+            <Table bordered hover style={{ fontSize: 16 }} responsive="sm">
+                <thead>
+                    <tr>
+                        <th>S.No.</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Quantity</th>
+                        <th>Category</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Hey</td>
+                        <td>Hey</td>
+                        <td>Hey</td>
+                        <td>Hey</td>
+                        <td>Hey</td>
+                        <td>Hey</td>
+                    </tr>
+                </tbody>
+            </Table>
+        );
+    };
 
     return (
         <Layout sidebar>
@@ -100,6 +126,9 @@ function Products() {
                             </div>
                         </div>
                     </Col>
+                </Row>
+                <Row>
+                    <Col md={12}>{renderProducts()}</Col>
                 </Row>
                 <Modal
                     show={show}
