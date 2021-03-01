@@ -33,26 +33,56 @@ function SignUp() {
     return (
         <Layout>
             <Container>
-                <Row style={{ marginTop: '50px' }}>
+                <Row style={{ marginTop: "100px" }}>
                     <Col md={{ span: 6, offset: 3 }}>
                         <Form onSubmit={userSignUp}>
                             <Row>
                                 <Col md={6}>
-                                    <Input value={firstName} onChange={(e) => setFirstName(e.target.value)} label="First Name" type="text" placeholder="First Name" />
+                                    <Input
+                                        value={firstName}
+                                        onChange={(e) =>
+                                            setFirstName(e.target.value)
+                                        }
+                                        label="First Name"
+                                        type="text"
+                                        placeholder="First Name"
+                                    />
                                 </Col>
                                 <Col md={6}>
-                                    <Input value={lastName} onChange={(e) => setLastName(e.target.value)} label="Last Name" type="text" placeholder="Last Name" />
+                                    <Input
+                                        value={lastName}
+                                        onChange={(e) =>
+                                            setLastName(e.target.value)
+                                        }
+                                        label="Last Name"
+                                        type="text"
+                                        placeholder="Last Name"
+                                    />
                                 </Col>
                             </Row>
-                            <Input value={email} onChange={(e) => setEmail(e.target.value)} label="Email Address" type="email" placeholder="Email Address" />
-                            <Input value={password} onChange={(e) => setPasssword(e.target.value)} label="Password" type="password" placeholder="Password" />
-                            <Button variant="primary" type="submit">Submit</Button>
+                            <Input
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                label="Email Address"
+                                type="email"
+                                placeholder="Email Address"
+                            />
+                            <Input
+                                value={password}
+                                onChange={(e) => setPasssword(e.target.value)}
+                                label="Password"
+                                type="password"
+                                placeholder="Password"
+                            />
+                            <Button variant="primary" type="submit">
+                                Submit
+                            </Button>
                         </Form>
                     </Col>
                 </Row>
             </Container>
         </Layout>
-    )
+    );
 }
 
 export default SignUp
