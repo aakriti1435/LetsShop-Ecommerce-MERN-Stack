@@ -1,26 +1,38 @@
-import User from '../../models/user.js';
-import jwt from 'jsonwebtoken';
-import shortid from 'shortid';
+import User from "../../models/user.js";
+import jwt from "jsonwebtoken";
+import shortid from "shortid";
+import bcrypt from "bcrypt";
 
 export const signOut = (req, res) => {
-    res.clearCookie('tokenC');
+    res.clearCookie("tokenC");
     res.status(200).json({
-        message: 'User Logged Out Successfully'
+        message: "User Logged Out Successfully",
     });
 };
 
 export const signIn = (req, res) => {
-    User.findOne({ email: req.body.email }).exec(async(error, user) => {
+    User.findOne({ email: req.body.email }).exec(async (error, user) => {
         if (error) {
             return res.status(400).json({ error });
-        };
+        }
 
         if (user) {
             const isPassword = await user.authenticate(req.body.password);
-            if (isPassword && user.role === 'admin') {
-                const token = jwt.sign({ _id: user._id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' });
-                const { _id, firstName, lastName, email, role, fullName } = user;
-                res.cookie('tokenC', token, { expiresIn: '1h' });
+            if (isPassword && user.role === "admin") {
+                const token = jwt.sign(
+                    { _id: user._id, role: user.role },
+                    process.env.JWT_SECRET,
+                    { expiresIn: "1h" }
+                );
+                const {
+                    _id,
+                    firstName,
+                    lastName,
+                    email,
+                    role,
+                    fullName,
+                } = user;
+                res.cookie("tokenC", token, { expiresIn: "1h" });
                 res.status(200).json({
                     token,
                     user: {
@@ -29,38 +41,46 @@ export const signIn = (req, res) => {
                         lastName,
                         email,
                         role,
-                        fullName
-                    }
-                })
+                        fullName,
+                    },
+                });
             } else {
-                return res.status(400).json({ message: "Invalid Password" })
+                return res.status(400).json({ message: "Invalid Password" });
             }
         } else {
-            return res.status(400).json({ message: "Something Went Wrong" })
+            return res.status(400).json({ message: "Something Went Wrong" });
         }
     });
 };
 
-export const signUp = async(req, res) => {
-    User.findOne({ email: req.body.email }).exec((error, user) => {
+export const signUp = async (req, res) => {
+    User.findOne({ email: req.body.email }).exec(async (error, user) => {
         if (user) {
-            return res.status(400).json({ message: 'Admin Already Exists!' })
-        };
+            return res.status(400).json({ message: "Admin Already Exists!" });
+        }
 
         const { firstName, lastName, email, password } = req.body;
-        const _user = new User({ firstName, lastName, email, password, username: shortid.generate(), role: 'admin' });
+        const hashPassword = await bcrypt.hash(password, 10);
+        const _user = new User({
+            firstName,
+            lastName,
+            email,
+            hashPassword,
+            username: shortid.generate(),
+            role: "admin",
+        });
 
         _user.save((error, data) => {
             if (error) {
                 console.log(error);
                 return res.status(400).json({
-                    message: 'Something Went Wrong'
+                    message: "Something Went Wrong",
                 });
             }
             if (data) {
                 return res.status(201).json({
-                    message: 'Admin Created Successfully'
-                })
+                    message: "Admin Created Successfully",
+                });
             }
         });
     });
