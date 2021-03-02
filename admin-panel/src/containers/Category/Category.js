@@ -6,12 +6,27 @@ import Input from "../../components/GenericUI/Input";
 import Layout from "../../components/Layout/Layout";
 import Modal from "../../components/GenericUI/Modal";
 import "./Category.css";
+import CheckboxTree from "react-checkbox-tree";
+import "react-checkbox-tree/lib/react-checkbox-tree.css";
+import {
+    IoIosCheckboxOutline,
+    IoIosCheckbox,
+    IoIosArrowForward,
+    IoIosArrowDown,
+    IoIosAdd,
+    IoIosTrash,
+    IoIosCloudUpload,
+} from "react-icons/io";
 
 function Category() {
     const [show, setShow] = useState(false);
     const [categoryName, setCategoryName] = useState("");
     const [parentCategoryId, setParentCategoryId] = useState("");
     const [categoryImage, setCategoryImage] = useState("");
+    const [checked, setChecked] = useState([]);
+    const [expanded, setExpanded] = useState([]);
+    const [checkedArray, setCheckedArray] = useState([]);
+    const [expandedArray, setExpandedArray] = useState([]);
 
     const category = useSelector((state) => state.category);
     const dispatch = useDispatch();
@@ -31,14 +46,13 @@ function Category() {
     const renderCategories = (categories) => {
         let myCategories = [];
         for (let category of categories) {
-            myCategories.push(
-                <li key={category._id}>
-                    {category.name}
-                    {category.children.length > 0 ? (
-                        <ul>{renderCategories(category.children)}</ul>
-                    ) : null}
-                </li>
-            );
+            myCategories.push({
+                label: category.name,
+                value: category._id,
+                children:
+                    category.children.length > 0 &&
+                    renderCategories(category.children),
+            });
         }
 
         return myCategories;
@@ -87,7 +101,20 @@ function Category() {
                 </Row>
                 <Row>
                     <Col md={12}>
-                        <ul>{renderCategories(category.categories)}</ul>
+                        <CheckboxTree
+                            nodes={renderCategories(category.categories)}
+                            checked={checked}
+                            expanded={expanded}
+                            onCheck={(checked) => setChecked(checked)}
+                            onExpand={(expanded) => setExpanded(expanded)}
+                            icons={{
+                                check: <IoIosCheckbox />,
+                                uncheck: <IoIosCheckboxOutline />,
+                                halfCheck: <IoIosCheckboxOutline />,
+                                expandClose: <IoIosArrowForward />,
+                                expandOpen: <IoIosArrowDown />,
+                            }}
+                        />
                     </Col>
                 </Row>
                 <Modal
