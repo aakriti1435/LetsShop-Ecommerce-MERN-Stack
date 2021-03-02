@@ -20,7 +20,8 @@
     line-height: 40px;
     cursor: pointer;
     padding: 0 20px;
-    font-size: 14px;
+    font-size: 15px;
+    font-weight: 500;
 }
 .menuHeader > ul > li > span:hover {
     color: #2874f0;
@@ -46,12 +47,13 @@
 }
 .menuHeader > ul > li > ul > li > a {
     font-weight: bold;
+    font-size: 14px !important;
     display: block;
 }
 .menuHeader > ul > li > ul > li a {
     padding: 3px 0;
     display: block;
-    font-size: 12px;
+    font-size: 13px;
     text-decoration: none;
     color: #707070;
 }
