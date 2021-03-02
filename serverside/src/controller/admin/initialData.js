@@ -8,7 +8,7 @@ export const getInitialData = async (req, res) => {
         .select(
             "_id name slug price quantity description productPictures category"
         )
-        .populate("category")
+        .populate({ path: "category", select: "_id name" })
         .exec();
 
     res.status(200).json({

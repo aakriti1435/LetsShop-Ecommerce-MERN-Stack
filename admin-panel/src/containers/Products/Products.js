@@ -10,6 +10,7 @@ import Input from "../../components/GenericUI/Input";
 import Layout from "../../components/Layout/Layout";
 import Modal from "../../components/GenericUI/Modal";
 import "./Products.css";
+import { generatePublicUrl } from "../../urlConfig";
 
 function Products() {
     const [show, setShow] = useState(false);
@@ -147,11 +148,13 @@ function Products() {
         setShowPDModal(false);
     };
     const handleShowPDModal = (product) => {
+        setProductDetails(product);
         setShowPDModal(true);
         console.log(product);
     };
 
     const renderProductDetailsModal = () => {
+        if (!productDetails) return null;
         return (
             <Modal
                 show={showPDModal}
@@ -159,7 +162,47 @@ function Products() {
                 modalTitle={"Product Details"}
                 size="lg"
             >
-                <p>Product Details Model</p>
+                <Row>
+                    <Col md="6">
+                        <label className="key">Name</label>
+                        <p className="value">{productDetails.name}</p>
+                    </Col>
+                    <Col md="6">
+                        <label className="key">Price</label>
+                        <p className="value">{productDetails.price}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="6">
+                        <label className="key">Quantity</label>
+                        <p className="value">{productDetails.quantity}</p>
+                    </Col>
+                    <Col md="6">
+                        <label className="key">Category</label>
+                        <p className="value">{productDetails.category.name}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col md="12">
+                        <label className="key">Description</label>
+                        <p className="value">{productDetails.description}</p>
+                    </Col>
+                </Row>
+                <Row>
+                    <Col>
+                        <label className="key">Product Pictures</label>
+                        <div style={{ display: "flex" }}>
+                            {productDetails.productPictures.map((picture) => (
+                                <div className="productImgContainer">
+                                    <img
+                                        src={generatePublicUrl(picture.img)}
+                                        alt=""
+                                    />
+                                </div>
+                            ))}
+                        </div>
+                    </Col>
+                </Row>
             </Modal>
         );
     };
@@ -189,8 +232,8 @@ function Products() {
                                   <td>{p.name}</td>
                                   <td>{p.price}</td>
                                   <td>{p.quantity}</td>
-                                  <td>hey</td>
-                                  <td>hey</td>
+                                  <td>{p.category.name}</td>
+                                  <td>--</td>
                               </tr>
                           ))
                         : null}
