@@ -67,6 +67,7 @@ export const createProduct = (req, res) => {
             return { img: file.filename };
         });
     }
+    console.log(req.user);
 
     const product = new Product({
         name: name,
