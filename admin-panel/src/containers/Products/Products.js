@@ -13,6 +13,7 @@ import "./Products.css";
 
 function Products() {
     const [show, setShow] = useState(false);
+    const [showPDModal, setShowPDModal] = useState(false);
 
     const [productName, setProductName] = useState("");
     const [quantity, setQuantity] = useState("");
@@ -20,6 +21,8 @@ function Products() {
     const [description, setDescription] = useState("");
     const [categoryId, setCategoryId] = useState("");
     const [productPictures, setProductPictures] = useState([]);
+
+    const [productDetails, setProductDetails] = useState(null);
 
     const category = useSelector((state) => state.category);
     const product = useSelector((state) => state.product);
@@ -76,6 +79,91 @@ function Products() {
         setProductPictures([...productPictures, e.target.files[0]]);
     };
 
+    const renderAddProductsModal = () => {
+        return (
+            <Modal
+                show={show}
+                handleClose={handleClose}
+                modalTitle={"Add New Product"}
+            >
+                <Input
+                    type="text"
+                    value={productName}
+                    placeholder={`Enter Product Name`}
+                    onChange={(e) => setProductName(e.target.value)}
+                />
+                <Input
+                    type="number"
+                    value={quantity}
+                    placeholder={`Enter Product Quantity `}
+                    onChange={(e) => setQuantity(e.target.value)}
+                />
+                <Input
+                    type="text"
+                    value={price}
+                    placeholder={`Enter Product Price`}
+                    onChange={(e) => setPrice(e.target.value)}
+                />
+                <Input
+                    type="text"
+                    value={description}
+                    placeholder={`Enter Product Description`}
+                    onChange={(e) => setDescription(e.target.value)}
+                />
+                <select
+                    className="form-control"
+                    value={categoryId}
+                    onChange={(e) => setCategoryId(e.target.value)}
+                >
+                    {createCategoryList(category.categories).map((option) => (
+                        <option key={option.value} value={option.value}>
+                            {option.name}
+                        </option>
+                    ))}
+                </select>
+                {productPictures.length > 0 ? (
+                    <ul
+                        style={{
+                            marginTop: "15px",
+                            marginLeft: "-20px",
+                        }}
+                    >
+                        {productPictures.map((pic) => (
+                            <li>{pic.name}</li>
+                        ))}
+                    </ul>
+                ) : null}
+                <input
+                    style={{ marginTop: "5px" }}
+                    type="file"
+                    onChange={handleProductImages}
+                    name="productPicture"
+                />
+            </Modal>
+        );
+    };
+
+    const handleClosePDModal = () => {
+        setShowPDModal(false);
+    };
+    const handleShowPDModal = (product) => {
+        setShowPDModal(true);
+        console.log(product);
+    };
+
+    const renderProductDetailsModal = () => {
+        return (
+            <Modal
+                show={showPDModal}
+                handleClose={handleClosePDModal}
+                modalTitle={"Product Details"}
+                size="lg"
+            >
+                <p>Product Details Model</p>
+            </Modal>
+        );
+    };
+
     const renderProducts = () => {
         return (
             <Table bordered hover style={{ fontSize: 16 }} responsive="sm">
@@ -92,7 +180,11 @@ function Products() {
                 <tbody>
                     {product.products.length > 0
                         ? product.products.map((p) => (
-                              <tr key={p._id}>
+                              <tr
+                                  style={{ cursor: "pointer" }}
+                                  onClick={() => handleShowPDModal(p)}
+                                  key={p._id}
+                              >
                                   <td>{p._id}</td>
                                   <td>{p.name}</td>
                                   <td>{p.price}</td>
@@ -131,67 +223,8 @@ function Products() {
                 <Row>
                     <Col md={12}>{renderProducts()}</Col>
                 </Row>
-                <Modal
-                    show={show}
-                    handleClose={handleClose}
-                    modalTitle={"Add New Product"}
-                >
-                    <Input
-                        type="text"
-                        value={productName}
-                        placeholder={`Enter Product Name`}
-                        onChange={(e) => setProductName(e.target.value)}
-                    />
-                    <Input
-                        type="number"
-                        value={quantity}
-                        placeholder={`Enter Product Quantity `}
-                        onChange={(e) => setQuantity(e.target.value)}
-                    />
-                    <Input
-                        type="text"
-                        value={price}
-                        placeholder={`Enter Product Price`}
-                        onChange={(e) => setPrice(e.target.value)}
-                    />
-                    <Input
-                        type="text"
-                        value={description}
-                        placeholder={`Enter Product Description`}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                    <select
-                        className="form-control"
-                        value={categoryId}
-                        onChange={(e) => setCategoryId(e.target.value)}
-                    >
-                        {createCategoryList(category.categories).map(
-                            (option) => (
-                                <option key={option.value} value={option.value}>
-                                    {option.name}
-                                </option>
-                            )
-                        )}
-                    </select>
-                    {productPictures.length > 0 ? (
-                        <ul
-                            style={{
-                                marginTop: "15px",
-                                marginLeft: "-20px",
-                            }}
-                        >
-                            {productPictures.map((pic) => (
-                                <li>{pic.name}</li>
-                            ))}
-                        </ul>
-                    ) : null}
-                    <input
-                        style={{ marginTop: "5px" }}
-                        type="file"
-                        onChange={handleProductImages}
-                        name="productPicture"
-                    />
-                </Modal>
+                {renderAddProductsModal()}
+                {renderProductDetailsModal()}
             </Container>
         </Layout>
     );
