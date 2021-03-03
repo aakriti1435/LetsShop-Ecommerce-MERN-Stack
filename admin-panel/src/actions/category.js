@@ -7,6 +7,9 @@ export const deleteCategories = (ids) => {
             payload: { ids },
         });
         console.log("deleted", res);
+        if (res.status === 200) {
+            return true;
+        }
     };
 };
 

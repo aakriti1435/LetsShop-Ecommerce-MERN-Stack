@@ -1,11 +1,12 @@
 import Category from "../models/category.js";
 import slugify from "slugify";
 import { createCategories } from "../common-middlewares/index.js";
+import shortid from "shortid";
 
 export const addCategory = (req, res) => {
     const categoryObj = {
         name: req.body.name,
-        slug: slugify(req.body.name),
+        slug: `${slugify(req.body.name)}-${shortid.generate()}`,
     };
 
     if (req.file) {
