@@ -11,6 +11,8 @@ const AddCategoryModal = (props) => {
         modalTitle,
         categoryName,
         setCategoryName,
+        categoryType,
+        setCategoryType,
         parentCategoryId,
         setParentCategoryId,
         categoryList,
@@ -44,6 +46,18 @@ const AddCategoryModal = (props) => {
                                 {option.name}
                             </option>
                         ))}
+                    </select>
+                </Col>
+                <Col>
+                    <select
+                        className="form-control"
+                        value={categoryType}
+                        onChange={(e) => setCategoryType(e.target.value)}
+                    >
+                        <option value="">Select Type</option>
+                        <option value="store">Store</option>
+                        <option value="product">Product</option>
+                        <option value="page">Page</option>
                     </select>
                 </Col>
             </Row>

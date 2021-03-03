@@ -7,6 +7,8 @@ export const addCategory = (req, res) => {
     const categoryObj = {
         name: req.body.name,
         slug: `${slugify(req.body.name)}-${shortid.generate()}`,
+        createdBy: req.user._id,
+        type: req.body.type,
     };
 
     if (req.file) {

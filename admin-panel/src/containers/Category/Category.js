@@ -27,6 +27,7 @@ import {
 function Category() {
     const [show, setShow] = useState(false);
     const [categoryName, setCategoryName] = useState("");
+    const [categoryType, setCategoryType] = useState("");
     const [parentCategoryId, setParentCategoryId] = useState("");
     const [categoryImage, setCategoryImage] = useState("");
     const [checked, setChecked] = useState([]);
@@ -49,6 +50,7 @@ function Category() {
         form.append("name", categoryName);
         form.append("parentId", parentCategoryId);
         form.append("categoryImg", categoryImage);
+        form.append("type", categoryType);
         dispatch(addCategory(form));
         setCategoryName("");
         setParentCategoryId("");
@@ -234,6 +236,8 @@ function Category() {
                 modalTitle={"Add New Category"}
                 categoryName={categoryName}
                 setCategoryName={setCategoryName}
+                categoryType={categoryType}
+                setCategoryType={setCategoryType}
                 parentCategoryId={parentCategoryId}
                 setParentCategoryId={setParentCategoryId}
                 categoryList={createCategoryList(category.categories)}

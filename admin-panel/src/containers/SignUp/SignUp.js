@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
-import Layout from '../../components/Layout/Layout';
-import Input from '../../components/GenericUI/Input';
-import { useDispatch, useSelector } from 'react-redux';
-import { Redirect } from 'react-router-dom';
-import { signup } from '../../actions/user';
+import React, { useState } from "react";
+import { Button, Col, Container, Form, Row } from "react-bootstrap";
+import Layout from "../../components/Layout/Layout";
+import Input from "../../components/GenericUI/Input";
+import { useDispatch, useSelector } from "react-redux";
+import { Redirect } from "react-router-dom";
+import { signup } from "../../actions/user";
+import { getInitialData } from "../../actions/actions";
 
 function SignUp() {
-
-    const user = useSelector(state => state.auth);
-    const [firstName, setFirstName] = useState('');
-    const [lastName, setLastName] = useState('');
-    const [email, setEmail] = useState('');
-    const [password, setPasssword] = useState('');
-    const [error, setError] = useState('');
+    const user = useSelector((state) => state.auth);
+    const [firstName, setFirstName] = useState("");
+    const [lastName, setLastName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPasssword] = useState("");
+    const [error, setError] = useState("");
     const dispatch = useDispatch();
 
     const userSignUp = (e) => {
         e.preventDefault();
         const user = { firstName, lastName, email, password };
         dispatch(signup(user));
+        dispatch(getInitialData());
     };
 
     if (user.authenticate) {
-        return <Redirect to={`/`} />
-    };
+        return <Redirect to={`/`} />;
+    }
 
     if (user.loading) {
-        return <p>Loading.....</p>
-    };
+        return <p>Loading.....</p>;
+    }
 
     return (
         <Layout>
@@ -85,4 +86,4 @@ function SignUp() {
     );
 }
 
-export default SignUp
+export default SignUp;
