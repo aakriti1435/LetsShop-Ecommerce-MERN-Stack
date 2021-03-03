@@ -1,0 +1,17 @@
+.btnContainers {
+    display: flex;
+    align-items: center;
+    margin-right: 20px;
+}
+
+.btnContainers > button {
+    border: 0;
+    margin: 0 5px;
+    font-size: 15px;
+    padding: 5px 10px;
+}
+
+.btnContainers > span {
+    margin-right: 10px;
+    font-size: 18px;
+}

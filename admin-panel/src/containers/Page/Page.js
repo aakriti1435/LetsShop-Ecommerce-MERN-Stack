@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import Layout from "../../components/Layout/Layout";
 import Modal from "../../components/GenericUI/Modal";
-import { Row, Col } from "react-bootstrap";
+import { Row, Col, Container } from "react-bootstrap";
 import Input from "../../components/GenericUI/Input";
 import { createCategoryList } from "../../helpers/linearCategories";
 import { useSelector } from "react-redux";
@@ -106,7 +106,28 @@ const Page = () => {
 
     return (
         <Layout sidebar>
-            <button onClick={() => setShow(true)}>hello</button>
+            <Container>
+                <Row>
+                    <Col md={12}>
+                        <div
+                            style={{
+                                marginTop: "25px",
+                                marginBottom: "15px",
+                                display: "flex",
+                                justifyContent: "space-between",
+                            }}
+                        >
+                            <h3>Pages</h3>
+                            <div className="btnContainers">
+                                <span>Actions: </span>
+                                <button onClick={(e) => setShow(true)}>
+                                    Create Page
+                                </button>
+                            </div>
+                        </div>
+                    </Col>
+                </Row>
+            </Container>
             {renderCreatePageModal()}
         </Layout>
     );
