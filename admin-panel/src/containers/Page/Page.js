@@ -85,20 +85,15 @@ const Page = () => {
                 modalTitle={"Create New Page"}
                 handleClose={createPageHandleClose}
             >
-                <Row style={{ marginBottom: "17px" }}>
+                <Row>
                     <Col>
-                        <select
-                            className="form-control"
+                        <Input
+                            type="select"
                             value={categoryId}
                             onChange={onCategoryChange}
-                        >
-                            <option value="">Select Category</option>
-                            {categories.map((c) => (
-                                <option value={c.value} key={c.value}>
-                                    {c.name}
-                                </option>
-                            ))}
-                        </select>
+                            options={categories}
+                            placeholder={"Select Category"}
+                        />
                     </Col>
                 </Row>
                 <Row>
