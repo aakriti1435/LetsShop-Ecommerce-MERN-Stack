@@ -221,7 +221,7 @@ function Products() {
                     </tr>
                 </thead>
                 <tbody>
-                    {product.products.length > 0
+                    {product && product.products.length > 0
                         ? product.products.map((p) => (
                               <tr
                                   style={{ cursor: "pointer" }}
