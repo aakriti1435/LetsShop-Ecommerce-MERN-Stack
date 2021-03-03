@@ -5,6 +5,7 @@ import {
     addCategory,
     getAllCategories,
     updateCategories,
+    deleteCategories as deleteCategoriesAction,
 } from "../../actions/actions";
 import Input from "../../components/GenericUI/Input";
 import Layout from "../../components/Layout/Layout";
@@ -32,6 +33,7 @@ function Category() {
     const [checkedArray, setCheckedArray] = useState([]);
     const [expandedArray, setExpandedArray] = useState([]);
     const [updateCategoryModal, setUpdateCategoryModal] = useState(false);
+    const [deleteCategoryModal, setDeleteCategoryModal] = useState(false);
 
     const category = useSelector((state) => state.category);
     const dispatch = useDispatch();
@@ -83,10 +85,8 @@ function Category() {
         setCategoryImage(e.target.files[0]);
     };
 
-    const updateCategory = () => {
-        setUpdateCategoryModal(true);
+    const updateCheckedExpandedArray = () => {
         const categories = createCategoryList(category.categories);
-
         const checkedArray = [];
         checked.length > 0 &&
             checked.forEach((categoryId, index) => {
@@ -106,6 +106,11 @@ function Category() {
 
         setCheckedArray(checkedArray);
         setExpandedArray(expandedArray);
+    };
+
+    const updateCategory = () => {
+        updateCheckedExpandedArray();
+        setUpdateCategoryModal(true);
     };
 
     const handleCategoryInput = (key, value, index, type) => {
@@ -180,12 +185,84 @@ function Category() {
         );
     };
 
+    const deleteCategoryHandleClose = () => {
+        setDeleteCategoryModal(false);
+    };
+
+    const deleteCategory = () => {
+        updateCheckedExpandedArray();
+        setDeleteCategoryModal(true);
+    };
+
+    const deleteCategories = () => {
+        const checkedIdsArray = checkedArray.map((item, index) => ({
+            _id: item.value,
+        }));
+        const expandedIdsArray = expandedArray.map((item, index) => ({
+            _id: item.value,
+        }));
+        const idsArray = expandedIdsArray.concat(checkedIdsArray);
+        dispatch(deleteCategoriesAction(idsArray));
+    };
+
+    const renderDeleteCategoryModal = () => {
+        return (
+            <Modal
+                modalTitle={"Delete Selected Category"}
+                show={deleteCategoryModal}
+                handleClose={deleteCategoryHandleClose}
+                buttons={[
+                    {
+                        label: "Cancel",
+                        color: "primary",
+                        onClick: () => setDeleteCategoryModal(false),
+                    },
+                    {
+                        label: "Delete",
+                        color: "danger",
+                        onClick: deleteCategories,
+                    },
+                ]}
+            >
+                <h6
+                    style={{
+                        borderBottom: "1px solid gray",
+                        paddingBottom: "5px",
+                    }}
+                >
+                    <b>Expanded</b>
+                </h6>
+                {expandedArray.map((item, index) => (
+                    <span key={index}>
+                        {item.name}
+                        <br />
+                    </span>
+                ))}
+                <h6
+                    style={{
+                        borderBottom: "1px solid gray",
+                        paddingTop: "10px",
+                        paddingBottom: "5px",
+                    }}
+                >
+                    <b>Checked</b>
+                </h6>
+                {checkedArray.map((item, index) => (
+                    <span key={index}>
+                        {item.name}
+                        <br />
+                    </span>
+                ))}
+            </Modal>
+        );
+    };
+
     const renderUpdateCategoryModal = () => {
         return (
             <Modal
                 show={updateCategoryModal}
                 handleClose={updateCategoryHandleClose}
-                modalTitle={"Update Category"}
+                modalTitle={"Update Selected Category"}
                 size="lg"
             >
                 <Row>
@@ -357,7 +434,7 @@ function Category() {
                                 <button onClick={handleShow}>
                                     <IoIosAdd /> <span>Add</span>
                                 </button>
-                                <button>
+                                <button onClick={deleteCategory}>
                                     <IoIosTrash /> <span>Delete</span>
                                 </button>
                                 <button onClick={updateCategory}>
@@ -388,6 +465,7 @@ function Category() {
             </Container>
             {renderAddCategoryModal()}
             {renderUpdateCategoryModal()}
+            {renderDeleteCategoryModal()}
         </Layout>
     );
 }

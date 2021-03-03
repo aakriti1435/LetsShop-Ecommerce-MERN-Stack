@@ -1,6 +1,15 @@
 import { categoryConstants } from "./constants";
 import axios from "../helpers/axios";
 
+export const deleteCategories = (ids) => {
+    return async (dispatch) => {
+        const res = await axios.post(`/category/delete`, {
+            payload: { ids },
+        });
+        console.log(res);
+    };
+};
+
 export const updateCategories = (form) => {
     return async (dispatch) => {
         const res = await axios.post(`/category/update`, form);
