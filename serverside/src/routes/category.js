@@ -4,7 +4,11 @@ import {
     adminMiddleware,
     upload,
 } from "../common-middlewares/index.js";
-import { addCategory, getCategories } from "../controller/category.js";
+import {
+    addCategory,
+    getCategories,
+    updateCategory,
+} from "../controller/category.js";
 
 const router = express.Router();
 
@@ -14,6 +18,14 @@ router.post(
     adminMiddleware,
     upload.single("categoryImg"),
     addCategory
+);
+
+router.post(
+    "/category/update",
+    // requireSignIn,
+    adminMiddleware,
+    upload.array("categoryImg"),
+    updateCategory
 );
 
 router.get("/category/getCategory", getCategories);
