@@ -4,7 +4,8 @@ import Modal from "../../components/GenericUI/Modal";
 import { Row, Col, Container } from "react-bootstrap";
 import Input from "../../components/GenericUI/Input";
 import { createCategoryList } from "../../helpers/linearCategories";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { createPage } from "../../actions/page";
 
 const Page = () => {
     const category = useSelector((state) => state.category);
@@ -14,20 +15,53 @@ const Page = () => {
     const [categories, setCategories] = useState([]);
     const [categoryId, setCategoryId] = useState("");
     const [desc, setDesc] = useState("");
+    const [type, setType] = useState("");
     const [banners, setBanners] = useState([]);
     const [products, setProducts] = useState([]);
+
+    const dispatch = useDispatch();
 
     useEffect(() => {
         setCategories(createCategoryList(category.categories));
         console.log(categories);
-    }, []);
+    }, [category]);
 
     const handleBannerImages = (e) => {
-        console.log(e);
+        setBanners([...banners, e.target.files[0]]);
     };
 
     const handleProductImages = (e) => {
-        console.log(e);
+        setProducts([...products, e.target.files[0]]);
+    };
+
+    const onCategoryChange = (e) => {
+        const category = categories.find((c) => c.value == e.target.value);
+        console.log(">>>", category);
+        setCategoryId(e.target.value);
+        setType(category.type);
+    };
+
+    const createPageHandleClose = (e) => {
+        const form = new FormData();
+
+        if (title === "" || desc === "") {
+            alert("Form Not Filled Correctly. Try Again");
+            setShow(false);
+        }
+
+        form.append("title", title);
+        form.append("description", desc);
+        form.append("category", categoryId);
+        form.append("type", type);
+        banners.forEach((banner, index) => {
+            form.append("banners", banner);
+        });
+        products.forEach((product, index) => {
+            form.append("products", product);
+        });
+
+        dispatch(createPage(form));
+        setShow(false);
     };
 
     const renderCreatePageModal = () => {
@@ -36,18 +70,20 @@ const Page = () => {
                 show={show}
                 size="lg"
                 modalTitle={"Create New Page"}
-                handleClose={() => setShow(false)}
+                handleClose={createPageHandleClose}
             >
                 <Row style={{ marginBottom: "17px" }}>
                     <Col>
                         <select
                             className="form-control"
                             value={categoryId}
-                            onChange={(e) => setCategoryId(e.target.value)}
+                            onChange={onCategoryChange}
                         >
                             <option value="">Select Category</option>
                             {categories.map((c) => (
-                                <option value={c.value}>{c.name}</option>
+                                <option value={c.value} key={c.value}>
+                                    {c.name}
+                                </option>
                             ))}
                         </select>
                     </Col>
@@ -72,9 +108,16 @@ const Page = () => {
                         ></Input>
                     </Col>
                 </Row>
+
                 <Row>
                     <Col md={4}>
-                        <label style={{ marginLeft: "5px", fontWeight: "500" }}>
+                        <label
+                            style={{
+                                marginBottom: "-20px !important",
+                                marginLeft: "5px",
+                                fontWeight: "600",
+                            }}
+                        >
                             Upload Banner Images
                         </label>
                     </Col>
@@ -86,9 +129,21 @@ const Page = () => {
                         ></Input>
                     </Col>
                 </Row>
+                {banners.length > 0 ? (
+                    <ul
+                        style={{
+                            marginLeft: "-20px",
+                        }}
+                    >
+                        {banners.map((banner, index) => (
+                            <li key={index}>{banner.name}</li>
+                        ))}
+                    </ul>
+                ) : null}
+
                 <Row>
                     <Col md={4}>
-                        <label style={{ marginLeft: "5px", fontWeight: "500" }}>
+                        <label style={{ marginLeft: "5px", fontWeight: "600" }}>
                             Upload Product Images
                         </label>
                     </Col>
@@ -100,6 +155,17 @@ const Page = () => {
                         ></Input>
                     </Col>
                 </Row>
+                {products.length > 0 ? (
+                    <ul
+                        style={{
+                            marginLeft: "-20px",
+                        }}
+                    >
+                        {products.map((product, index) => (
+                            <li key={index}>{product.name}</li>
+                        ))}
+                    </ul>
+                ) : null}
             </Modal>
         );
     };
