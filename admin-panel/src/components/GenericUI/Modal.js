@@ -20,6 +20,7 @@ function NewModal(props) {
                                 key={index}
                                 variant={btn.color}
                                 onClick={btn.onClick}
+                                className="btn-sm"
                             >
                                 {btn.label}
                             </Button>

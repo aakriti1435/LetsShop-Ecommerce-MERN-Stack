@@ -41,6 +41,11 @@ function Category() {
 
     const handleClose = () => {
         const form = new FormData();
+        if (categoryName === "") {
+            alert("Category name is required");
+            setShow(false);
+            return;
+        }
         form.append("name", categoryName);
         form.append("parentId", parentCategoryId);
         form.append("categoryImg", categoryImage);
@@ -233,6 +238,7 @@ function Category() {
             <AddCategoryModal
                 show={show}
                 handleClose={handleClose}
+                size="lg"
                 modalTitle={"Add New Category"}
                 categoryName={categoryName}
                 setCategoryName={setCategoryName}
