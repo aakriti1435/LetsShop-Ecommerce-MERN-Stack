@@ -14,6 +14,7 @@ import "react-checkbox-tree/lib/react-checkbox-tree.css";
 import UpdateCategoryModal from "./components/UpdateCategoryModal";
 import AddCategoryModal from "./components/AddCategoryModal";
 import DeleteCategoryModal from "./components/DeleteCategoryModal";
+import { createCategoryList } from "../../helpers/linearCategories";
 import {
     IoIosCheckboxOutline,
     IoIosCheckbox,
@@ -71,22 +72,6 @@ function Category() {
         }
 
         return myCategories;
-    };
-
-    //Creating a linear list
-    const createCategoryList = (categories, options = []) => {
-        for (let category of categories) {
-            options.push({
-                value: category._id,
-                name: category.name,
-                parentId: category.parentId,
-                type: category.type,
-            });
-            if (category.children.length > 0) {
-                createCategoryList(category.children, options);
-            }
-        }
-        return options;
     };
 
     const handleCategoryImage = (e) => {

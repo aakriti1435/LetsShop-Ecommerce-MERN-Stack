@@ -11,6 +11,7 @@ function Input(props) {
                 value={props.value}
                 onChange={props.onChange}
                 {...props}
+                name={props.name}
             />
             <Form.Text className="text-muted">{props.errorMessage}</Form.Text>
         </Form.Group>

@@ -11,6 +11,7 @@ import Layout from "../../components/Layout/Layout";
 import Modal from "../../components/GenericUI/Modal";
 import "./Products.css";
 import { generatePublicUrl } from "../../urlConfig";
+import { createCategoryList } from "../../helpers/linearCategories";
 
 function Products() {
     const [show, setShow] = useState(false);
@@ -59,21 +60,6 @@ function Products() {
         }
 
         return myCategories;
-    };
-
-    const createCategoryList = (categories, options = []) => {
-        for (let category of categories) {
-            options.push({
-                value: category._id,
-                name: category.name,
-                parentId: category.parentId,
-                type: category.type,
-            });
-            if (category.children.length > 0) {
-                createCategoryList(category.children, options);
-            }
-        }
-        return options;
     };
 
     const handleProductImages = (e) => {
@@ -134,8 +120,8 @@ function Products() {
                         ))}
                     </ul>
                 ) : null}
-                <input
-                    style={{ marginTop: "5px" }}
+                <Input
+                    style={{ marginTop: "17px" }}
                     type="file"
                     onChange={handleProductImages}
                     name="productPicture"

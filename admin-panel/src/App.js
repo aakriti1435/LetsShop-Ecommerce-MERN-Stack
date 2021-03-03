@@ -11,6 +11,7 @@ import Products from "./containers/Products/Products";
 import Orders from "./containers/Orders/Orders";
 import Category from "./containers/Category/Category";
 import { getInitialData } from "./actions/actions";
+import Page from "./containers/Page/Page";
 
 function App() {
     const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
                 <Route exact path="/signIn" component={SignIn} />
                 <Route exact path="/signUp" component={SignUp} />
 
+                <PrivateRoute exact path="/page" component={Page} />
                 <PrivateRoute exact path="/category" component={Category} />
                 <PrivateRoute exact path="/products" component={Products} />
                 <PrivateRoute exact path="/orders" component={Orders} />
