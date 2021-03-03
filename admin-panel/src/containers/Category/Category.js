@@ -203,6 +203,7 @@ function Category() {
         }));
         const idsArray = expandedIdsArray.concat(checkedIdsArray);
         dispatch(deleteCategoriesAction(idsArray));
+        setDeleteCategoryModal(false);
     };
 
     const renderDeleteCategoryModal = () => {

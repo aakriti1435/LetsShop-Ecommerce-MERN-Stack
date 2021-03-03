@@ -6,6 +6,7 @@ import {
 } from "../common-middlewares/index.js";
 import {
     addCategory,
+    deleteCategory,
     getCategories,
     updateCategory,
 } from "../controller/category.js";
@@ -19,6 +20,8 @@ router.post(
     upload.single("categoryImg"),
     addCategory
 );
+
+router.post("/category/delete", requireSignIn, adminMiddleware, deleteCategory);
 
 router.post(
     "/category/update",

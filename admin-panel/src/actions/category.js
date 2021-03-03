@@ -6,7 +6,7 @@ export const deleteCategories = (ids) => {
         const res = await axios.post(`/category/delete`, {
             payload: { ids },
         });
-        console.log(res);
+        console.log("deleted", res);
     };
 };
 
