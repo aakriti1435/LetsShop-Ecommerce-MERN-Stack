@@ -41,6 +41,12 @@ function Category() {
     const category = useSelector((state) => state.category);
     const dispatch = useDispatch();
 
+    useEffect(() => {
+        if (!category.loading) {
+            setShow(false);
+        }
+    }, [category.loading]);
+
     const handleClose = () => {
         const form = new FormData();
         if (categoryName === "") {

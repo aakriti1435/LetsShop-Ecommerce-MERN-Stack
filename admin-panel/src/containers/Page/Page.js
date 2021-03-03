@@ -18,8 +18,21 @@ const Page = () => {
     const [type, setType] = useState("");
     const [banners, setBanners] = useState([]);
     const [products, setProducts] = useState([]);
+    const page = useSelector((state) => state.page);
 
     const dispatch = useDispatch();
+
+    useEffect(() => {
+        console.log(page);
+        if (!page.loading) {
+            setShow(false);
+            setTitle("");
+            setCategoryId("");
+            setDesc("");
+            setProducts([]);
+            setBanners([]);
+        }
+    }, [page]);
 
     useEffect(() => {
         setCategories(createCategoryList(category.categories));

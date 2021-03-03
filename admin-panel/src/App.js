@@ -18,10 +18,13 @@ function App() {
     const user = useSelector((state) => state.auth);
 
     useEffect(() => {
-        if (!user.authenticate) dispatch(isUserLoggedIn());
-
-        dispatch(getInitialData());
-    }, []);
+        if (!user.authenticate) {
+            dispatch(isUserLoggedIn());
+        }
+        if (user.authenticate) {
+            dispatch(getInitialData());
+        }
+    }, [user.authenticate]);
 
     return (
         <div className="app">
