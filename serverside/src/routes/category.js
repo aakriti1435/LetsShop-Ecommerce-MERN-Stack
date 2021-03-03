@@ -22,7 +22,7 @@ router.post(
 
 router.post(
     "/category/update",
-    // requireSignIn,
+    requireSignIn,
     adminMiddleware,
     upload.array("categoryImg"),
     updateCategory
