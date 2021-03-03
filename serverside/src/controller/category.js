@@ -48,7 +48,7 @@ export const updateCategory = async (req, res) => {
                 category.parentId = parentId[i];
             }
             const updatedCategory = await Category.findOneAndUpdate(
-                { _id },
+                { _id: _id[i] },
                 category,
                 { new: true }
             );
