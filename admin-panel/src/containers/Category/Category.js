@@ -149,10 +149,7 @@ function Category() {
             form.append("type", item.type);
         });
 
-        dispatch(updateCategories(form)).then((result) => {
-            if (result) dispatch(getAllCategories());
-        });
-
+        dispatch(updateCategories(form));
         setUpdateCategoryModal(false);
     };
 
@@ -175,12 +172,7 @@ function Category() {
         const idsArray = expandedIdsArray.concat(checkedIdsArray);
 
         if (checkedIdsArray.length > 0) {
-            dispatch(deleteCategoriesAction(checkedIdsArray)).then((result) => {
-                if (result) {
-                    dispatch(getAllCategories());
-                    setDeleteCategoryModal(false);
-                }
-            });
+            dispatch(deleteCategoriesAction(checkedIdsArray));
         }
 
         setDeleteCategoryModal(false);
