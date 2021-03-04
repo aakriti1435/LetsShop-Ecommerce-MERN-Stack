@@ -9,6 +9,7 @@ import {
 } from "../MUIComponents/MUIComponents";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
+import { login } from "../../actions/user";
 
 function Header() {
     const [loginModal, setLoginModal] = useState(false);
@@ -19,15 +20,19 @@ function Header() {
     const [password, setPassword] = useState("");
     const [error, setError] = useState("");
 
+    const dispatch = useDispatch();
+
+    const userLogin = () => {
+        const user = { email, password };
+        dispatch(login(user));
+    };
+
     return (
         <div className="header">
             <Modal visible={loginModal} onClose={() => setLoginModal(false)}>
                 <div className="authContainer">
                     <div className="row">
-                        <div
-                            style={{ textAlign: "center" }}
-                            className="leftspace"
-                        >
+                        <div className="leftspace">
                             <h2>Login</h2>
                             <br />
                             <p>
@@ -37,7 +42,7 @@ function Header() {
                         </div>
                         <div className="rightspace">
                             <div className="loginInputContainer">
-                                <MUIInput
+                                {/* <MUIInput
                                     type="text"
                                     label="First Name"
                                     value={firstName}
@@ -53,7 +58,7 @@ function Header() {
                                     onChange={(e) =>
                                         setLastName(e.target.value)
                                     }
-                                />
+                                /> */}
 
                                 <MUIInput
                                     type="text"
@@ -76,6 +81,7 @@ function Header() {
                                     style={{
                                         margin: "40px 0 20px 0",
                                     }}
+                                    onClick={userLogin}
                                 />
                                 <p
                                     style={{
