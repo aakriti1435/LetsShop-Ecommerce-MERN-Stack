@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { getProductsBySlug, getProductPage } from "../../../actions/actions";
 import Card from "../../../components/GenericUI/Card/Card";
 import { generatePublicUrl } from "../../../urlConfig";
+import { Link } from "react-router-dom";
 import "./ProductStore.css";
 
 const ProductStore = (props) => {
@@ -35,7 +36,8 @@ const ProductStore = (props) => {
                     >
                         <div style={{ display: "flex" }}>
                             {product.productsByPrice[key].map((product) => (
-                                <div
+                                <Link
+                                    to={`/${product.slug}/${product._id}/p`}
                                     style={{
                                         display: "block",
                                         textDecoration: "none",
@@ -72,7 +74,7 @@ const ProductStore = (props) => {
                                             {product.price}
                                         </div>
                                     </div>
-                                </div>
+                                </Link>
                             ))}
                         </div>
                     </Card>

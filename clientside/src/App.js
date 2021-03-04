@@ -5,6 +5,7 @@ import { Route, Switch } from "react-router-dom";
 import ProductList from "./containers/ProductListPage/ProductList";
 import { useDispatch, useSelector } from "react-redux";
 import { isUserLoggedIn } from "./actions/user";
+import ProductDetails from "./containers/ProductDetailsPage/ProductDetails";
 
 function App() {
     const dispatch = useDispatch();
@@ -19,6 +20,10 @@ function App() {
     return (
         <div className="app">
             <Switch>
+                <Route
+                    path="/:produtSlug/:productId/p"
+                    component={ProductDetails}
+                />
                 <Route path="/:slug" component={ProductList} />
                 <Route path="/" exact component={Home} />
             </Switch>

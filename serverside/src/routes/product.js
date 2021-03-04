@@ -4,7 +4,11 @@ import {
     adminMiddleware,
     upload,
 } from "../common-middlewares/index.js";
-import { createProduct, getProductsBySlug } from "../controller/product.js";
+import {
+    createProduct,
+    getProductDetailsById,
+    getProductsBySlug,
+} from "../controller/product.js";
 
 const router = express.Router();
 
@@ -17,5 +21,7 @@ router.post(
 );
 
 router.get("/products/:slug", getProductsBySlug);
+
+router.get("/product/:productId", getProductDetailsById);
 
 export default router;
