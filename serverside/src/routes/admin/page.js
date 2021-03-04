@@ -4,7 +4,7 @@ import {
     requireSignIn,
     upload,
 } from "../../common-middlewares/index.js";
-import { createPage } from "../../controller/admin/page.js";
+import { createPage, getPage } from "../../controller/admin/page.js";
 
 const router = express.Router();
 
@@ -15,5 +15,7 @@ router.post(
     upload.fields([{ name: "banners" }, { name: "products" }]),
     createPage
 );
+
+router.get("/page/:category/:type", getPage);
 
 export default router;
