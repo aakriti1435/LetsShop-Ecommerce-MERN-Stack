@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./MUIComponents.css";
+import { IoMdClose } from "react-icons/io";
 
 const Modal = (props) => {
     if (!props.visible) {
@@ -10,7 +11,7 @@ const Modal = (props) => {
             <div className="modalFixedBg">
                 <div style={{ position: "relative" }}>
                     <div className="modalClose" onClick={props.onClose}>
-                        X
+                        <IoMdClose />
                     </div>
                     <div className="modalContainer">{props.children}</div>
                 </div>

@@ -24,9 +24,13 @@
 }
 .modalClose {
     position: absolute;
-    color: #fff;
-    right: 15px;
+    color: #000;
+    font-size: 16px;
+    font-weight: 700;
+    top: 10px;
+    right: 65px;
     font-size: 20px;
+    cursor: pointer;
 }
 
 /* MUIInput */

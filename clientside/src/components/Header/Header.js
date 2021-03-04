@@ -24,8 +24,12 @@ function Header() {
             <Modal visible={loginModal} onClose={() => setLoginModal(false)}>
                 <div className="authContainer">
                     <div className="row">
-                        <div className="leftspace">
+                        <div
+                            style={{ textAlign: "center" }}
+                            className="leftspace"
+                        >
                             <h2>Login</h2>
+                            <br />
                             <p>
                                 Get access to your Orders, Wishlist and
                                 Recommendations
@@ -66,20 +70,28 @@ function Header() {
                                     }
                                 />
                                 <MUIButton
-                                    title={"Login"}
+                                    title={"LOGIN"}
                                     bgColor="#fb641b"
                                     textColor="#ffffff"
                                     style={{
                                         margin: "40px 0 20px 0",
                                     }}
                                 />
-                                <p style={{ textAlign: "center" }}>OR</p>
+                                <p
+                                    style={{
+                                        textAlign: "center",
+                                        fontWeight: "bold",
+                                    }}
+                                >
+                                    OR
+                                </p>
                                 <MUIButton
                                     title="Request OTP"
                                     bgColor="#ffffff"
                                     textColor="#2874f0"
                                     style={{
                                         margin: "20px 0",
+                                        border: "1px solid #fb641b",
                                     }}
                                 />
                             </div>
@@ -93,11 +105,7 @@ function Header() {
                         <img src={flipkartLogo} className="logoimage" alt="" />
                     </a>
                 </div>
-                <div
-                    style={{
-                        padding: "0 10px",
-                    }}
-                >
+                <div>
                     <div className="searchInputContainer">
                         <input
                             className="searchInput"
@@ -107,6 +115,7 @@ function Header() {
                             <IoIosSearch
                                 style={{
                                     color: "#2874f0",
+                                    fontSize: "23px",
                                 }}
                             />
                         </div>
