@@ -3,6 +3,13 @@ import jwt from "jsonwebtoken";
 import shortid from "shortid";
 import bcrypt from "bcrypt";
 
+export const signOut = (req, res) => {
+    res.clearCookie("tokenC");
+    res.status(200).json({
+        message: "User Logged Out Successfully",
+    });
+};
+
 export const signIn = (req, res) => {
     User.findOne({ email: req.body.email }).exec(async (error, user) => {
         if (error) {
@@ -25,6 +32,7 @@ export const signIn = (req, res) => {
                     role,
                     fullName,
                 } = user;
+                res.cookie("tokenC", token, { expiresIn: "1h" });
                 res.status(200).json({
                     token,
                     user: {

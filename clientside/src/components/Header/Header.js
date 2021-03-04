@@ -9,7 +9,7 @@ import {
 } from "../MUIComponents/MUIComponents";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
-import { login } from "../../actions/user";
+import { login, signout } from "../../actions/user";
 
 function Header() {
     const [loginModal, setLoginModal] = useState(false);
@@ -26,10 +26,17 @@ function Header() {
     const userLogin = () => {
         const user = { email, password };
         dispatch(login(user));
-        setLoginModal(false);
     };
 
-    useEffect(() => {}, [auth.authenticate]);
+    const userLogout = () => {
+        dispatch(signout());
+    };
+
+    useEffect(() => {
+        if (auth.authenticate) {
+            setLoginModal(false);
+        }
+    }, [auth.authenticate]);
 
     const renderLoggedInMenu = () => {
         return (
@@ -46,7 +53,12 @@ function Header() {
                     { label: "Rewards", href: "", icon: null },
                     { label: "Notifications", href: "", icon: null },
                     { label: "Gift Cards", href: "", icon: null },
-                    { label: "Logout", href: "", icon: null },
+                    {
+                        label: "Logout",
+                        href: "",
+                        icon: null,
+                        onClick: userLogout,
+                    },
                 ]}
             />
         );
