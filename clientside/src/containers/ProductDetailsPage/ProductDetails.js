@@ -7,6 +7,7 @@ import { BiRupee } from "react-icons/bi";
 import { AiFillThunderbolt } from "react-icons/ai";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
 import "./ProductDetails.css";
+import { generatePublicUrl } from "../../urlConfig";
 
 function ProductDetails(props) {
     const dispatch = useDispatch();
@@ -34,7 +35,10 @@ function ProductDetails(props) {
                             {product.productDetails.productPictures.map(
                                 (thumb, index) => (
                                     <div className="thumbnail">
-                                        <img src={thumb.img} alt={thumb.img} />
+                                        <img
+                                            src={generatePublicUrl(thumb.img)}
+                                            alt={thumb.img}
+                                        />
                                     </div>
                                 )
                             )}
@@ -42,22 +46,23 @@ function ProductDetails(props) {
                         <div className="productDescContainer">
                             <div className="productDescImgContainer">
                                 <img
-                                    src={
+                                    src={generatePublicUrl(
                                         product.productDetails
                                             .productPictures[0].img
-                                    }
+                                    )}
                                     alt={`${product.productDetails.productPictures[0].img}`}
                                 />
                             </div>
 
                             {/* action buttons */}
-                            <div className="flexRow">
+                            <div className="btnContainer flexRow">
                                 <MUIButton
                                     title="ADD TO CART"
                                     bgColor="#ff9f00"
                                     textColor="#ffffff"
                                     style={{
                                         marginRight: "5px",
+                                        marginLeft: "20px",
                                     }}
                                     icon={<IoMdCart />}
                                     onClick={() => {
@@ -84,8 +89,7 @@ function ProductDetails(props) {
                             </div>
                         </div>
                     </div>
-                    <div>
-                        {/* home > category > subCategory > productName */}
+                    <div className="DescContainer">
                         <div className="breed">
                             <ul>
                                 <li>
@@ -141,7 +145,8 @@ function ProductDetails(props) {
                                 <p
                                     style={{
                                         color: "#212121",
-                                        fontSize: "14px",
+                                        fontSize: "16px",
+                                        margin: "10px 0",
                                         fontWeight: "600",
                                     }}
                                 >
@@ -151,7 +156,7 @@ function ProductDetails(props) {
                                     <span
                                         style={{
                                             width: "100px",
-                                            fontSize: "12px",
+                                            fontSize: "14px",
                                             color: "#878787",
                                             fontWeight: "600",
                                             marginRight: "20px",
@@ -161,7 +166,7 @@ function ProductDetails(props) {
                                     </span>
                                     <span
                                         style={{
-                                            fontSize: "12px",
+                                            fontSize: "14px",
                                             color: "#212121",
                                         }}
                                     >
