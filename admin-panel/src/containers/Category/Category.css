@@ -1,0 +1,37 @@
+.modal-header {
+    padding: 5px 15px;
+    background-color: #333;
+}
+
+.close {
+    color: #fff;
+}
+.close:hover {
+    color: #fff;
+}
+
+.modal-title {
+    font-size: 18px;
+    color: #fff;
+}
+
+.modal-footer {
+    padding: 10px 15px;
+}
+
+.btnContainers {
+    display: flex;
+    align-items: center;
+}
+
+.btnContainers > button {
+    border: 0;
+    margin: 0 5px;
+    font-size: 15px;
+    padding: 5px 10px;
+}
+
+.btnContainers > span {
+    margin-right: 10px;
+    font-size: 18px;
+}
