@@ -62,7 +62,7 @@ function ProductDetails(props) {
                                     textColor="#ffffff"
                                     style={{
                                         marginRight: "5px",
-                                        marginLeft: "20px",
+                                        marginLeft: "-5px",
                                     }}
                                     icon={<IoMdCart />}
                                     onClick={() => {

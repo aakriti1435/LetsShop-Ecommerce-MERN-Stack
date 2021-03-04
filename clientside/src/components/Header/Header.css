@@ -21,7 +21,7 @@
     flex-direction: column;
     justify-content: center;
     align-items: flex-end;
-    margin-right: 20px;
+    margin-right: 30px;
 }
 .logo .logoimage {
     width: 90px;
@@ -69,6 +69,7 @@
     font-weight: 500;
     font-size: 16px;
     cursor: pointer;
+    margin-right: 25px;
 }
 .more,
 .fullName {
