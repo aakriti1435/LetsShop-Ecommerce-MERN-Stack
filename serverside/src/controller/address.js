@@ -1,4 +1,4 @@
-import UserAddress from "../models/address";
+import UserAddress from "../models/address.js";
 
 export const addAddress = (req, res) => {
     const { payload } = req.body;
