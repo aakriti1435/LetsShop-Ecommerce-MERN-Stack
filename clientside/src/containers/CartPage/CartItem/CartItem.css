@@ -1,10 +1,15 @@
 .flexRow {
     display: flex;
 }
-
+.pp {
+    font-weight: 600;
+    font-size: 19px;
+    margin-top: 7px;
+}
 .cartItemContainer {
     margin: 10px 5px;
     padding: 10px;
+    border-bottom: 1px solid #ececec;
 }
 .cartProImgContainer {
     width: 112px;

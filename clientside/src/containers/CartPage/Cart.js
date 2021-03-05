@@ -1,14 +1,33 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/GenericUI/Card/Card";
 import "./Cart.css";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
 import CartItem from "./CartItem/CartItem";
+import { addToCart } from "../../actions/cart";
 
 function Cart(props) {
     const cart = useSelector((state) => state.cart);
-    const cartItems = cart.cartItems;
+    const [cartItems, setCartItems] = useState(cart.cartItems);
+
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        setCartItems(cart.cartItems);
+    }, [cart.cartItems]);
+
+    const onQtyIncrement = (_id, qty) => {
+        console.log(_id, qty);
+        const { name, price, img } = cartItems[_id];
+        dispatch(addToCart({ _id, name, price, img }, 1));
+    };
+
+    const onQtyDecrement = (_id, qty) => {
+        console.log(_id, qty);
+        const { name, price, img } = cartItems[_id];
+        dispatch(addToCart({ _id, name, price, img }, -1));
+    };
 
     return (
         <Layout>
@@ -20,7 +39,12 @@ function Cart(props) {
                 >
                     {/* {JSON.stringify(cartItems)} */}
                     {Object.keys(cartItems).map((key, index) => (
-                        <CartItem key={index} cartItem={cartItems[key]} />
+                        <CartItem
+                            key={index}
+                            cartItem={cartItems[key]}
+                            onQtyIncrement={onQtyIncrement}
+                            onQtyDecrement={onQtyDecrement}
+                        />
                     ))}
 
                     <div
