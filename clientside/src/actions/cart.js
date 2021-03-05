@@ -50,11 +50,7 @@ export const addToCart = (product, newQty = 1) => {
 
         dispatch({
             type: cartConstants.ADD_TO_CART_SUCCESS,
-            payload: {
-                cartItems: {
-                    [product._id]: product,
-                },
-            },
+            payload: { cartItems },
         });
     };
 };

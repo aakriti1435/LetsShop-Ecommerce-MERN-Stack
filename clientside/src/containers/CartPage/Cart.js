@@ -4,8 +4,12 @@ import Layout from "../../components/Layout/Layout";
 import Card from "../../components/GenericUI/Card/Card";
 import "./Cart.css";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
+import CartItem from "./CartItem/CartItem";
 
 function Cart(props) {
+    const cart = useSelector((state) => state.cart);
+    const cartItems = cart.cartItems;
+
     return (
         <Layout>
             <div className="cartContainer" style={{ alignItems: "flex-start" }}>
@@ -14,15 +18,10 @@ function Cart(props) {
                     headerRight={<div>Deliver to</div>}
                     style={{ width: "calc(100% - 400px)", overflow: "hidden" }}
                 >
-                    {/* {Object.keys(cartItems).map((key, index) => (
-                        <CartItem
-                            key={index}
-                            cartItem={cartItems[key]}
-                            onQuantityInc={onQuantityIncrement}
-                            onQuantityDec={onQuantityDecrement}
-                            onRemoveCartItem={onRemoveCartItem}
-                        />
-                    ))} */}
+                    {/* {JSON.stringify(cartItems)} */}
+                    {Object.keys(cartItems).map((key, index) => (
+                        <CartItem key={index} cartItem={cartItems[key]} />
+                    ))}
 
                     <div
                         style={{
@@ -31,7 +30,7 @@ function Cart(props) {
                             background: "#ffffff",
                             justifyContent: "flex-end",
                             boxShadow: "0 0 10px 10px #eee",
-                            padding: "10px 0",
+                            padding: "10px 10px",
                             boxSizing: "border-box",
                         }}
                     >
