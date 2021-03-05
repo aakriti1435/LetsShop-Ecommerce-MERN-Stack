@@ -10,7 +10,7 @@ function runUpdate(condition, updateData) {
     });
 }
 
-export const addToCart = (req, res) => {
+export const addItemToCart = (req, res) => {
     Cart.findOne({ user: req.user._id }).exec((error, cart) => {
         if (error) return res.status(400).json({ error });
 
@@ -20,7 +20,7 @@ export const addToCart = (req, res) => {
 
             req.body.cartItems.forEach((cartItem) => {
                 //Checking if item already exists or not
-                const product = req.body.cartItems.product;
+                const product = cartItem.product;
                 const isItemPresent = cart.cartItems.find(
                     (c) => c.product == product
                 );

@@ -2,6 +2,32 @@ import { cartConstants } from "./constants";
 import axios from "../helpers/axios";
 import store from "../store/store";
 
+const getCartItems = () => {
+    return async (dispatch) => {
+        try {
+            dispatch({ type: cartConstants.ADD_TO_CART_REQUEST });
+            const res = await axios.get(`/user/getCartItems`);
+            if (res.status === 200) {
+                const { cartItems } = res.data;
+                console.log({ getCartItems: cartItems });
+                if (cartItems) {
+                    dispatch({
+                        type: cartConstants.ADD_TO_CART_SUCCESS,
+                        payload: { cartItems },
+                    });
+                }
+            } else {
+                dispatch({
+                    type: cartConstants.ADD_TO_CART_FAILURE,
+                    payload: { error: res.data.error },
+                });
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    };
+};
+
 export const addToCart = (product, newQty = 1) => {
     return async (dispatch) => {
         const {
@@ -22,7 +48,7 @@ export const addToCart = (product, newQty = 1) => {
                     {
                         product: product._id,
                         quantity: qty,
-                        price: product.price,
+                        // price: product.price,
                     },
                 ],
             };
@@ -32,10 +58,7 @@ export const addToCart = (product, newQty = 1) => {
             console.log(res);
 
             if (res.status === 201) {
-                dispatch({
-                    type: cartConstants.ADD_TO_CART_SUCCESS,
-                    payload: { cartItems },
-                });
+                dispatch(getCartItems());
             } else {
                 dispatch({
                     type: cartConstants.ADD_TO_CART_FAILURE,
@@ -57,15 +80,50 @@ export const addToCart = (product, newQty = 1) => {
 
 export const updateCart = () => {
     return async (dispatch) => {
-        const cart = localStorage.getItem("cart")
+        const { auth } = store.getState();
+        let cartItems = localStorage.getItem("cart")
             ? JSON.parse(localStorage.getItem("cart"))
             : null;
 
-        if (cart) {
-            dispatch({
-                type: cartConstants.ADD_TO_CART_SUCCESS,
-                payload: { cartItems: cart },
-            });
+        console.log("update cart");
+
+        if (auth.authenticate) {
+            localStorage.removeItem("cart");
+            if (cartItems) {
+                const payload = {
+                    cartItems: Object.keys(cartItems).map((key, index) => {
+                        return {
+                            quantity: cartItems[key].qty,
+                            product: cartItems[key]._id,
+                        };
+                    }),
+                };
+                if (Object.keys(cartItems).length > 0) {
+                    const res = await axios.post(
+                        `/user/cart/addtocart`,
+                        payload
+                    );
+                    if (res.status === 201) {
+                        dispatch(getCartItems());
+                    } else {
+                        dispatch({
+                            type: cartConstants.ADD_TO_CART_FAILURE,
+                            payload: { error: res.data.error },
+                        });
+                    }
+                }
+            } else {
+                dispatch(getCartItems());
+            }
+        } else {
+            if (cartItems) {
+                dispatch({
+                    type: cartConstants.ADD_TO_CART_SUCCESS,
+                    payload: { cartItems },
+                });
+            }
         }
     };
 };
+
+export { getCartItems };

@@ -5,10 +5,11 @@ import Card from "../../components/GenericUI/Card/Card";
 import "./Cart.css";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
 import CartItem from "./CartItem/CartItem";
-import { addToCart } from "../../actions/cart";
+import { addToCart, getCartItems } from "../../actions/cart";
 
 function Cart(props) {
     const cart = useSelector((state) => state.cart);
+    const auth = useSelector((state) => state.auth);
     const [cartItems, setCartItems] = useState(cart.cartItems);
 
     const dispatch = useDispatch();
@@ -16,6 +17,12 @@ function Cart(props) {
     useEffect(() => {
         setCartItems(cart.cartItems);
     }, [cart.cartItems]);
+
+    useEffect(() => {
+        if (auth.authenticate) {
+            dispatch(getCartItems());
+        }
+    }, [auth.authenticate]);
 
     const onQtyIncrement = (_id, qty) => {
         console.log(_id, qty);
