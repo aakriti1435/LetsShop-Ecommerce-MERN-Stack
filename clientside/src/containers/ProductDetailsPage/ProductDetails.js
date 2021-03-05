@@ -8,6 +8,7 @@ import { AiFillThunderbolt } from "react-icons/ai";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
 import "./ProductDetails.css";
 import { generatePublicUrl } from "../../urlConfig";
+import { addToCart } from "../../actions/actions";
 
 function ProductDetails(props) {
     const dispatch = useDispatch();
@@ -74,6 +75,9 @@ function ProductDetails(props) {
                                         const img =
                                             product.productDetails
                                                 .productPictures[0].img;
+                                        dispatch(
+                                            addToCart({ _id, name, price, img })
+                                        );
                                         props.history.push(`/cart`);
                                     }}
                                 />

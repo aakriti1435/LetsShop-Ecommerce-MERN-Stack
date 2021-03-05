@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsBySlug, getProductPage } from "../../../actions/actions";
+import { getProductsBySlug } from "../../../actions/actions";
+import { MUIButton } from "../../../components/MUIComponents/MUIComponents";
 import Card from "../../../components/GenericUI/Card/Card";
 import { generatePublicUrl } from "../../../urlConfig";
 import { Link } from "react-router-dom";
@@ -33,6 +34,16 @@ const ProductStore = (props) => {
                             width: "calc(100% - 40px)",
                             margin: "20px",
                         }}
+                        headerRight={
+                            <MUIButton
+                                title={"VIEW ALL"}
+                                style={{
+                                    width: "96px",
+                                }}
+                                bgColor="#2874f0"
+                                fontSize="12px"
+                            />
+                        }
                     >
                         <div style={{ display: "flex" }}>
                             {product.productsByPrice[key].map((product) => (
