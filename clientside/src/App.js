@@ -19,9 +19,10 @@ function App() {
         }
     }, [auth.authenticate]);
 
+    //Component did update (component did mount)
     useEffect(() => {
         dispatch(updateCart());
-    }, []);
+    }, [auth.authenticate]);
 
     return (
         <div className="app">
