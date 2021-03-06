@@ -187,7 +187,6 @@ function AddressForm(props) {
                         onClick={onAddressSubmit}
                         style={{
                             width: "250px",
-                            // margin: "20px 0",
                         }}
                     />
                 </div>
@@ -197,7 +196,7 @@ function AddressForm(props) {
 
     return (
         <div className="checkoutStep" style={{ background: "#f5faff" }}>
-            <div className={`checkoutHeader`}>
+            <div className={`checkoutHeader nonActive`}>
                 <div>
                     <span className="stepNumber">+</span>
                     <span className="stepTitle">{"ADD NEW ADDRESS"}</span>

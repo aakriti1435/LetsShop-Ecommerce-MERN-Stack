@@ -10,11 +10,13 @@ import {
 } from "../../components/MUIComponents/MUIComponents";
 import "./Checkout.css";
 import AddressForm from "./AddressForm";
+import { IoMdCheckmark } from "react-icons/io";
 
 const CheckoutStep = (props) => {
     return (
         <div className="checkoutStep">
             <div
+                style={{ cursor: "pointer" }}
                 onClick={props.onClick}
                 className={`checkoutHeader ${
                     props.active ? "active" : "nonActive"
@@ -23,6 +25,7 @@ const CheckoutStep = (props) => {
                 <div>
                     <span className="stepNumber">{props.stepNumber}</span>
                     <span className="stepTitle">{props.title}</span>
+                    {/* {!props.active && <IoMdCheckmark />} */}
                 </div>
             </div>
             {props.body && props.body}
@@ -35,12 +38,39 @@ function Checkout(props) {
     const userAddress = useSelector((state) => state.address);
     const dispatch = useDispatch();
 
+    const [newAddress, setNewAddress] = useState(false);
+    const [address, setAddress] = useState([]);
+    const [confirmAddress, setConfirmAddress] = useState(false);
+    const [selectedAddress, setSelectedAddress] = useState(null);
+
     useEffect(() => {
-        dispatch(getAddress());
-    }, []);
+        auth.authenticate && dispatch(getAddress());
+    }, [auth.authenticate]);
+
+    useEffect(() => {
+        const address = userAddress.address.map((adr) => ({
+            ...adr,
+            selected: false,
+            edit: false,
+        }));
+        setAddress(address);
+    }, [userAddress.address]);
 
     const onAddressSubmit = () => {};
-    console.log(">>>>", userAddress.address);
+
+    const selectAddress = (addr) => {
+        const updatedAddress = address.map((adr) =>
+            adr._id === addr._id
+                ? { ...adr, selected: true, edit: true }
+                : { ...adr, selected: false, edit: false }
+        );
+        setAddress(updatedAddress);
+    };
+
+    const ConfirmDeliveryAddress = (addr) => {
+        setSelectedAddress(addr);
+        setConfirmAddress(true);
+    };
 
     return (
         <Layout>
@@ -119,17 +149,11 @@ function Checkout(props) {
                     <CheckoutStep
                         stepNumber={"2"}
                         title={"DELIVERY ADDRESS"}
-                        active={auth.authenticate}
+                        active={!confirmAddress && auth.authenticate}
                         body={
                             <>
-                                {(userAddress.address || []).map((adr) => (
+                                {confirmAddress ? (
                                     <div className="flexRow addressContainer">
-                                        <div>
-                                            <input
-                                                type="radio"
-                                                name="address"
-                                            />
-                                        </div>
                                         <div className="flexRow sb addressinfo">
                                             <div
                                                 style={{
@@ -139,14 +163,16 @@ function Checkout(props) {
                                                 }}
                                             >
                                                 <div
-                                                    style={{ fontSize: "15px" }}
+                                                    style={{
+                                                        fontSize: "15px",
+                                                    }}
                                                 >
                                                     <span
                                                         style={{
                                                             fontWeight: "500",
                                                         }}
                                                     >
-                                                        {adr.name}
+                                                        {selectedAddress.name}
                                                     </span>
                                                     <span
                                                         style={{
@@ -154,10 +180,14 @@ function Checkout(props) {
                                                         }}
                                                         className="adrType"
                                                     >
-                                                        {adr.addressType}
+                                                        {
+                                                            selectedAddress.addressType
+                                                        }
                                                     </span>
                                                     <span>
-                                                        {adr.mobileNumber}
+                                                        {
+                                                            selectedAddress.mobileNumber
+                                                        }
                                                     </span>
                                                 </div>
 
@@ -168,46 +198,159 @@ function Checkout(props) {
                                                         fontSize: "14px",
                                                     }}
                                                 >
-                                                    <span>{adr.address}</span>
+                                                    <span>
+                                                        {
+                                                            selectedAddress.address
+                                                        }
+                                                    </span>
                                                 </div>
                                                 <div
                                                     className="addr"
-                                                    style={{ fontSize: "14px" }}
+                                                    style={{
+                                                        fontSize: "14px",
+                                                    }}
                                                 >
                                                     <span>
-                                                        {adr.cityDistrictTown} -{" "}
+                                                        {
+                                                            selectedAddress.cityDistrictTown
+                                                        }{" "}
+                                                        -{" "}
                                                         <span
                                                             style={{
                                                                 fontWeight:
                                                                     "500",
                                                             }}
                                                         >
-                                                            {adr.pinCode}
+                                                            {
+                                                                selectedAddress.pinCode
+                                                            }
                                                         </span>
                                                     </span>
                                                 </div>
-                                                <MUIButton
-                                                    style={{
-                                                        width: "200px",
-                                                        marginTop: "15px",
-                                                    }}
-                                                    title="DELIVER HERE"
-                                                />
-                                            </div>
-                                            <div className="edit">
-                                                <span>EDIT</span>
                                             </div>
                                         </div>
                                     </div>
-                                ))}
+                                ) : (
+                                    (address || []).map((adr) => (
+                                        <div className="flexRow addressContainer">
+                                            <div>
+                                                <input
+                                                    type="radio"
+                                                    name="address"
+                                                    onClick={() =>
+                                                        selectAddress(adr)
+                                                    }
+                                                />
+                                            </div>
+                                            <div className="flexRow sb addressinfo">
+                                                <div
+                                                    style={{
+                                                        float: "left",
+                                                        cursor: "pointer",
+                                                        width: "100%",
+                                                    }}
+                                                >
+                                                    <div
+                                                        style={{
+                                                            fontSize: "15px",
+                                                        }}
+                                                    >
+                                                        <span
+                                                            style={{
+                                                                fontWeight:
+                                                                    "500",
+                                                            }}
+                                                        >
+                                                            {adr.name}
+                                                        </span>
+                                                        <span
+                                                            style={{
+                                                                margin:
+                                                                    "0px 11px",
+                                                            }}
+                                                            className="adrType"
+                                                        >
+                                                            {adr.addressType}
+                                                        </span>
+                                                        <span>
+                                                            {adr.mobileNumber}
+                                                        </span>
+                                                    </div>
+
+                                                    <div
+                                                        className="addr"
+                                                        style={{
+                                                            marginTop: "10px",
+                                                            fontSize: "14px",
+                                                        }}
+                                                    >
+                                                        <span>
+                                                            {adr.address}
+                                                        </span>
+                                                    </div>
+                                                    <div
+                                                        className="addr"
+                                                        style={{
+                                                            fontSize: "14px",
+                                                        }}
+                                                    >
+                                                        <span>
+                                                            {
+                                                                adr.cityDistrictTown
+                                                            }{" "}
+                                                            -{" "}
+                                                            <span
+                                                                style={{
+                                                                    fontWeight:
+                                                                        "500",
+                                                                }}
+                                                            >
+                                                                {adr.pinCode}
+                                                            </span>
+                                                        </span>
+                                                    </div>
+                                                    {adr.selected && (
+                                                        <MUIButton
+                                                            style={{
+                                                                width: "200px",
+                                                                marginTop:
+                                                                    "15px",
+                                                            }}
+                                                            title="DELIVER HERE"
+                                                            onClick={() =>
+                                                                ConfirmDeliveryAddress(
+                                                                    adr
+                                                                )
+                                                            }
+                                                        />
+                                                    )}
+                                                </div>
+                                                <div className="edit">
+                                                    {adr.edit && (
+                                                        <span>EDIT</span>
+                                                    )}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    ))
+                                )}
                             </>
                         }
                     />
 
-                    <AddressForm
-                        onSubmit={onAddressSubmit}
-                        onCancel={() => {}}
-                    />
+                    {confirmAddress ? null : newAddress ? (
+                        <AddressForm
+                            onSubmit={onAddressSubmit}
+                            onCancel={() => {}}
+                        />
+                    ) : auth.authenticate ? (
+                        <CheckoutStep
+                            stepNumber={"+"}
+                            title={"ADD NEW ADDRESS"}
+                            active={false}
+                            onClick={() => setNewAddress(true)}
+                        />
+                    ) : null}
                 </div>
             </div>
         </Layout>
