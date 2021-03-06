@@ -4,7 +4,7 @@ import axios from "../helpers/axios";
 export const getAddress = () => {
     return async (dispatch) => {
         try {
-            const res = await axios.post(`/user/getAddress`);
+            const res = await axios.get(`/user/getAddress`);
             console.log(res);
 
             dispatch({ type: addressConstants.GET_USER_ADDRESS_REQUEST });
