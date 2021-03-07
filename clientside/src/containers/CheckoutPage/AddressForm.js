@@ -67,6 +67,7 @@ function AddressForm(props) {
         }
         dispatch(addAddress(payload));
         setSubmitFlag(true);
+        props.setNewAddress(false);
     };
 
     const renderAddressForm = () => {

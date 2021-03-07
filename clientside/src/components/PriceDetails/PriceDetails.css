@@ -1,0 +1,10 @@
+.pdetails > span {
+    display: block;
+    text-transform: uppercase;
+    font-weight: 500;
+    color: #878787;
+    min-height: 27px;
+    border-radius: 2px 2px 0 0;
+    border-bottom: 1px solid #f0f0f0;
+    font-size: 16px;
+}

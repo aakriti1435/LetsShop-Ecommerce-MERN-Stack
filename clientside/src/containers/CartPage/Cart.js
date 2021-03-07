@@ -6,6 +6,7 @@ import "./Cart.css";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
 import CartItem from "./CartItem/CartItem";
 import { addToCart, getCartItems } from "../../actions/cart";
+import PriceDetails from "../../components/PriceDetails/PriceDetails";
 
 function Cart(props) {
     const cart = useSelector((state) => state.cart);
@@ -73,7 +74,7 @@ function Cart(props) {
                         </div>
                     </div>
                 </Card>
-                {/* <PriceDetails
+                <PriceDetails
                     totalItem={Object.keys(cart.cartItems).reduce(function (
                         qty,
                         key
@@ -88,7 +89,7 @@ function Cart(props) {
                         },
                         0
                     )}
-                /> */}
+                />
             </div>
         </Layout>
     );

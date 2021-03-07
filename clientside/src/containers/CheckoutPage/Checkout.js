@@ -10,6 +10,7 @@ import {
 } from "../../components/MUIComponents/MUIComponents";
 import "./Checkout.css";
 import AddressForm from "./AddressForm";
+import PriceDetails from "../../components/PriceDetails/PriceDetails";
 import { IoMdCheckmark } from "react-icons/io";
 
 const CheckoutStep = (props) => {
@@ -36,6 +37,7 @@ const CheckoutStep = (props) => {
 function Checkout(props) {
     const auth = useSelector((state) => state.auth);
     const userAddress = useSelector((state) => state.address);
+    const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const [newAddress, setNewAddress] = useState(false);
@@ -339,10 +341,7 @@ function Checkout(props) {
                     />
 
                     {confirmAddress ? null : newAddress ? (
-                        <AddressForm
-                            onSubmit={onAddressSubmit}
-                            onCancel={() => {}}
-                        />
+                        <AddressForm setNewAddress={setNewAddress} />
                     ) : auth.authenticate ? (
                         <CheckoutStep
                             stepNumber={"+"}
@@ -352,6 +351,23 @@ function Checkout(props) {
                         />
                     ) : null}
                 </div>
+
+                <PriceDetails
+                    totalItem={Object.keys(cart.cartItems).reduce(function (
+                        qty,
+                        key
+                    ) {
+                        return qty + cart.cartItems[key].qty;
+                    },
+                    0)}
+                    totalPrice={Object.keys(cart.cartItems).reduce(
+                        (totalPrice, key) => {
+                            const { price, qty } = cart.cartItems[key];
+                            return totalPrice + price * qty;
+                        },
+                        0
+                    )}
+                />
             </div>
         </Layout>
     );
