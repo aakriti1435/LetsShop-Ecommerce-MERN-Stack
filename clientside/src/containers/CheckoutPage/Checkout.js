@@ -155,6 +155,7 @@ function Checkout(props) {
     const [confirmAddress, setConfirmAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [orderSummary, setOrderSummary] = useState(false);
+    const [orderConfirmation, setOrderConfirmation] = useState(false);
 
     useEffect(() => {
         auth.authenticate && dispatch(getAddress());
@@ -199,6 +200,11 @@ function Checkout(props) {
                 : { ...adr, edit: false }
         );
         setAddress(updatedAddress);
+    };
+
+    const userOrderConfirmation = () => {
+        setOrderConfirmation(true);
+        setOrderSummary(false);
     };
 
     console.log(">>", newAddress);
@@ -400,9 +406,44 @@ function Checkout(props) {
                         title={"ORDER SUMMARY"}
                         active={orderSummary}
                         body={
-                            orderSummary ? <Cart onlyCartItems={true} /> : null
+                            orderSummary ? (
+                                <Cart onlyCartItems={true} />
+                            ) : orderConfirmation ? (
+                                <div className="stepCompleted">
+                                    {Object.keys(cart.cartItems).length} items
+                                </div>
+                            ) : null
                         }
                     />
+
+                    {orderSummary && (
+                        <Card>
+                            <div
+                                className="flexRow sb"
+                                style={{
+                                    padding: "16px 24px",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        flex: "1 1 auto",
+                                        fontSize: "14px",
+                                    }}
+                                >
+                                    Order confirmation email will be sent to{" "}
+                                    <strong>{auth.user.email}</strong>
+                                </span>
+                                <MUIButton
+                                    title="CONTINUE"
+                                    onClick={userOrderConfirmation}
+                                    style={{
+                                        width: "200px",
+                                    }}
+                                />
+                            </div>
+                        </Card>
+                    )}
                 </div>
 
                 <PriceDetails

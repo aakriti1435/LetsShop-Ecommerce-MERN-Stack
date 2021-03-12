@@ -40,14 +40,16 @@ function Cart(props) {
     if (props.onlyCartItems) {
         return (
             <>
-                {Object.keys(cartItems).map((key, index) => (
-                    <CartItem
-                        key={index}
-                        cartItem={cartItems[key]}
-                        onQtyIncrement={onQtyIncrement}
-                        onQtyDecrement={onQtyDecrement}
-                    />
-                ))}
+                <div style={{ padding: "15px" }}>
+                    {Object.keys(cartItems).map((key, index) => (
+                        <CartItem
+                            key={index}
+                            cartItem={cartItems[key]}
+                            onQtyIncrement={onQtyIncrement}
+                            onQtyDecrement={onQtyDecrement}
+                        />
+                    ))}
+                </div>
             </>
         );
     }
