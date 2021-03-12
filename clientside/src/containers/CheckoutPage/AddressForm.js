@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { addAddress } from "../../actions/actions";
+import { addAddress, getAddress } from "../../actions/actions";
 import {
     MUIButton,
     MUIInput,
@@ -66,8 +66,8 @@ function AddressForm(props) {
             payload.address._id = id;
         }
         dispatch(addAddress(payload));
+        if (!props.withoutLayout) props.setNewAddress(false);
         setSubmitFlag(true);
-        props.setNewAddress(false);
     };
 
     const renderAddressForm = () => {
@@ -195,9 +195,13 @@ function AddressForm(props) {
         );
     };
 
+    if (props.withoutLayout) {
+        return <div>{renderAddressForm()}</div>;
+    }
+
     return (
         <div className="checkoutStep" style={{ background: "#f5faff" }}>
-            <div className={`checkoutHeader nonActive`}>
+            <div onClick={props.onClick} className={`checkoutHeader nonActive`}>
                 <div>
                     <span className="stepNumber">+</span>
                     <span className="stepTitle">{"ADD NEW ADDRESS"}</span>

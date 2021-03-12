@@ -34,6 +34,115 @@ const CheckoutStep = (props) => {
     );
 };
 
+const Address = ({
+    adr,
+    selectAddress,
+    enableAddressEditForm,
+    ConfirmDeliveryAddress,
+    onAddressSubmit,
+}) => {
+    return (
+        <div className="flexRow addressContainer">
+            <div>
+                <input
+                    type="radio"
+                    name="address"
+                    onClick={() => selectAddress(adr)}
+                />
+            </div>
+            <div className="flexRow sb addressinfo">
+                {!adr.edit ? (
+                    <>
+                        <div
+                            style={{
+                                float: "left",
+                                cursor: "pointer",
+                                width: "100%",
+                            }}
+                        >
+                            <div
+                                style={{
+                                    fontSize: "15px",
+                                }}
+                            >
+                                <span
+                                    style={{
+                                        fontWeight: "500",
+                                    }}
+                                >
+                                    {adr.name}
+                                </span>
+                                <span
+                                    style={{
+                                        margin: "0px 11px",
+                                    }}
+                                    className="adrType"
+                                >
+                                    {adr.addressType}
+                                </span>
+                                <span>{adr.mobileNumber}</span>
+                            </div>
+
+                            <div
+                                className="addr"
+                                style={{
+                                    marginTop: "10px",
+                                    fontSize: "14px",
+                                }}
+                            >
+                                <span>{adr.address}</span>
+                            </div>
+                            <div
+                                className="addr"
+                                style={{
+                                    fontSize: "14px",
+                                }}
+                            >
+                                <span>
+                                    {adr.cityDistrictTown} -{" "}
+                                    <span
+                                        style={{
+                                            fontWeight: "500",
+                                        }}
+                                    >
+                                        {adr.pinCode}
+                                    </span>
+                                </span>
+                            </div>
+                            {adr.selected && (
+                                <MUIButton
+                                    style={{
+                                        width: "200px",
+                                        marginTop: "15px",
+                                    }}
+                                    title="DELIVER HERE"
+                                    onClick={() => ConfirmDeliveryAddress(adr)}
+                                />
+                            )}
+                        </div>
+                        <div className="edit">
+                            {adr.selected && (
+                                <Anchor
+                                    name="EDIT"
+                                    onClick={() => enableAddressEditForm(adr)}
+                                    className="edit"
+                                />
+                            )}
+                        </div>
+                    </>
+                ) : (
+                    <AddressForm
+                        withoutLayout={true}
+                        onSubmitForm={onAddressSubmit}
+                        initialData={adr}
+                        onCancel={() => {}}
+                    />
+                )}
+            </div>
+        </div>
+    );
+};
+
 function Checkout(props) {
     const auth = useSelector((state) => state.auth);
     const userAddress = useSelector((state) => state.address);
@@ -47,6 +156,7 @@ function Checkout(props) {
 
     useEffect(() => {
         auth.authenticate && dispatch(getAddress());
+        auth.authenticate && dispatch(getCartItems());
     }, [auth.authenticate]);
 
     useEffect(() => {
@@ -58,13 +168,16 @@ function Checkout(props) {
         setAddress(address);
     }, [userAddress.address]);
 
-    const onAddressSubmit = () => {};
+    const onAddressSubmit = (addr) => {
+        setSelectedAddress(addr);
+        setConfirmAddress(true);
+    };
 
     const selectAddress = (addr) => {
         const updatedAddress = address.map((adr) =>
             adr._id === addr._id
-                ? { ...adr, selected: true, edit: true }
-                : { ...adr, selected: false, edit: false }
+                ? { ...adr, selected: true }
+                : { ...adr, selected: false }
         );
         setAddress(updatedAddress);
     };
@@ -73,6 +186,19 @@ function Checkout(props) {
         setSelectedAddress(addr);
         setConfirmAddress(true);
     };
+
+    const enableAddressEditForm = (addr) => {
+        console.log(">>>>>>>", addr);
+        const updatedAddress = address.map((adr) =>
+            adr._id === addr._id
+                ? { ...adr, edit: true }
+                : { ...adr, edit: false }
+        );
+        setAddress(updatedAddress);
+    };
+
+    console.log(">>", newAddress);
+    console.log(">>>", confirmAddress);
 
     return (
         <Layout>
@@ -234,106 +360,17 @@ function Checkout(props) {
                                     </div>
                                 ) : (
                                     (address || []).map((adr) => (
-                                        <div className="flexRow addressContainer">
-                                            <div>
-                                                <input
-                                                    type="radio"
-                                                    name="address"
-                                                    onClick={() =>
-                                                        selectAddress(adr)
-                                                    }
-                                                />
-                                            </div>
-                                            <div className="flexRow sb addressinfo">
-                                                <div
-                                                    style={{
-                                                        float: "left",
-                                                        cursor: "pointer",
-                                                        width: "100%",
-                                                    }}
-                                                >
-                                                    <div
-                                                        style={{
-                                                            fontSize: "15px",
-                                                        }}
-                                                    >
-                                                        <span
-                                                            style={{
-                                                                fontWeight:
-                                                                    "500",
-                                                            }}
-                                                        >
-                                                            {adr.name}
-                                                        </span>
-                                                        <span
-                                                            style={{
-                                                                margin:
-                                                                    "0px 11px",
-                                                            }}
-                                                            className="adrType"
-                                                        >
-                                                            {adr.addressType}
-                                                        </span>
-                                                        <span>
-                                                            {adr.mobileNumber}
-                                                        </span>
-                                                    </div>
-
-                                                    <div
-                                                        className="addr"
-                                                        style={{
-                                                            marginTop: "10px",
-                                                            fontSize: "14px",
-                                                        }}
-                                                    >
-                                                        <span>
-                                                            {adr.address}
-                                                        </span>
-                                                    </div>
-                                                    <div
-                                                        className="addr"
-                                                        style={{
-                                                            fontSize: "14px",
-                                                        }}
-                                                    >
-                                                        <span>
-                                                            {
-                                                                adr.cityDistrictTown
-                                                            }{" "}
-                                                            -{" "}
-                                                            <span
-                                                                style={{
-                                                                    fontWeight:
-                                                                        "500",
-                                                                }}
-                                                            >
-                                                                {adr.pinCode}
-                                                            </span>
-                                                        </span>
-                                                    </div>
-                                                    {adr.selected && (
-                                                        <MUIButton
-                                                            style={{
-                                                                width: "200px",
-                                                                marginTop:
-                                                                    "15px",
-                                                            }}
-                                                            title="DELIVER HERE"
-                                                            onClick={() =>
-                                                                ConfirmDeliveryAddress(
-                                                                    adr
-                                                                )
-                                                            }
-                                                        />
-                                                    )}
-                                                </div>
-                                                <div className="edit">
-                                                    {adr.edit && (
-                                                        <span>EDIT</span>
-                                                    )}
-                                                </div>
-                                            </div>
-                                        </div>
+                                        <Address
+                                            selectAddress={selectAddress}
+                                            enableAddressEditForm={
+                                                enableAddressEditForm
+                                            }
+                                            ConfirmDeliveryAddress={
+                                                ConfirmDeliveryAddress
+                                            }
+                                            onAddressSubmit={onAddressSubmit}
+                                            adr={adr}
+                                        />
                                     ))
                                 )}
                             </>

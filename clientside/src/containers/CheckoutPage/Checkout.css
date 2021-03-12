@@ -127,7 +127,7 @@
     color: #2874f0;
     border: 0;
     background: none;
-    cursor: pointer;
+    cursor: pointer !important;
     outline: none;
     font-weight: 500;
 }
