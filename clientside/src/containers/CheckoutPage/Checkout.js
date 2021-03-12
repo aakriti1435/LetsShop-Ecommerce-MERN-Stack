@@ -156,6 +156,8 @@ function Checkout(props) {
     const [selectedAddress, setSelectedAddress] = useState(null);
     const [orderSummary, setOrderSummary] = useState(false);
     const [orderConfirmation, setOrderConfirmation] = useState(false);
+    const [paymentOption, setPaymentOption] = useState(false);
+    const [confirmOrder, setConfirmOrder] = useState(false);
 
     useEffect(() => {
         auth.authenticate && dispatch(getAddress());
@@ -205,6 +207,11 @@ function Checkout(props) {
     const userOrderConfirmation = () => {
         setOrderConfirmation(true);
         setOrderSummary(false);
+        setPaymentOption(true);
+    };
+
+    const onConfirmOrder = () => {
+        setConfirmOrder(true);
     };
 
     console.log(">>", newAddress);
@@ -417,11 +424,11 @@ function Checkout(props) {
                     />
 
                     {orderSummary && (
-                        <Card>
+                        <Card style={{ marginBottom: "10px" }}>
                             <div
                                 className="flexRow sb"
                                 style={{
-                                    padding: "16px 24px",
+                                    padding: "12px 24px",
                                     alignItems: "center",
                                 }}
                             >
@@ -444,6 +451,42 @@ function Checkout(props) {
                             </div>
                         </Card>
                     )}
+
+                    <CheckoutStep
+                        stepNumber={"4"}
+                        title={"PAYMENT OPTIONS"}
+                        active={paymentOption}
+                        body={
+                            paymentOption && (
+                                <div style={{ padding: "5px 45px 10px" }}>
+                                    <div
+                                        className="flexRow"
+                                        style={{
+                                            alignItems: "center",
+                                            padding: "10px",
+                                        }}
+                                    >
+                                        <input
+                                            type="radio"
+                                            name="paymentOption"
+                                            value="cod"
+                                        />
+                                        <div style={{ marginLeft: "10px" }}>
+                                            Cash on delivery
+                                        </div>
+                                    </div>
+                                    <MUIButton
+                                        title="CONFIRM ORDER"
+                                        onClick={onConfirmOrder}
+                                        style={{
+                                            width: "200px",
+                                            margin: "10px 0 10px 10px",
+                                        }}
+                                    />
+                                </div>
+                            )
+                        }
+                    />
                 </div>
 
                 <PriceDetails
