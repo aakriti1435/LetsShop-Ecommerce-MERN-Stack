@@ -11,6 +11,7 @@ import {
 import "./Checkout.css";
 import AddressForm from "./AddressForm";
 import PriceDetails from "../../components/PriceDetails/PriceDetails";
+import Cart from "../CartPage/Cart";
 import { IoMdCheckmark } from "react-icons/io";
 
 const CheckoutStep = (props) => {
@@ -398,6 +399,9 @@ function Checkout(props) {
                         stepNumber={"3"}
                         title={"ORDER SUMMARY"}
                         active={orderSummary}
+                        body={
+                            orderSummary ? <Cart onlyCartItems={true} /> : null
+                        }
                     />
                 </div>
 
