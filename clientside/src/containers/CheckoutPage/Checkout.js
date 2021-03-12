@@ -153,6 +153,7 @@ function Checkout(props) {
     const [address, setAddress] = useState([]);
     const [confirmAddress, setConfirmAddress] = useState(false);
     const [selectedAddress, setSelectedAddress] = useState(null);
+    const [orderSummary, setOrderSummary] = useState(false);
 
     useEffect(() => {
         auth.authenticate && dispatch(getAddress());
@@ -171,6 +172,7 @@ function Checkout(props) {
     const onAddressSubmit = (addr) => {
         setSelectedAddress(addr);
         setConfirmAddress(true);
+        setOrderSummary(true);
     };
 
     const selectAddress = (addr) => {
@@ -185,6 +187,7 @@ function Checkout(props) {
     const ConfirmDeliveryAddress = (addr) => {
         setSelectedAddress(addr);
         setConfirmAddress(true);
+        setOrderSummary(true);
     };
 
     const enableAddressEditForm = (addr) => {
@@ -198,7 +201,7 @@ function Checkout(props) {
     };
 
     console.log(">>", newAddress);
-    console.log(">>>", confirmAddress);
+    console.log(">>>", orderSummary);
 
     return (
         <Layout>
@@ -378,7 +381,10 @@ function Checkout(props) {
                     />
 
                     {confirmAddress ? null : newAddress ? (
-                        <AddressForm setNewAddress={setNewAddress} />
+                        <AddressForm
+                            setNewAddress={setNewAddress}
+                            onSubmitForm={onAddressSubmit}
+                        />
                     ) : auth.authenticate ? (
                         <CheckoutStep
                             stepNumber={"+"}
@@ -387,6 +393,12 @@ function Checkout(props) {
                             onClick={() => setNewAddress(true)}
                         />
                     ) : null}
+
+                    <CheckoutStep
+                        stepNumber={"3"}
+                        title={"ORDER SUMMARY"}
+                        active={orderSummary}
+                    />
                 </div>
 
                 <PriceDetails
