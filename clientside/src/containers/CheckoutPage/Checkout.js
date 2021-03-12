@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getAddress, getCartItems } from "../../actions/actions";
+import { addOrder, getAddress, getCartItems } from "../../actions/actions";
 import Layout from "../../components/Layout/Layout";
 import Card from "../../components/GenericUI/Card/Card";
 import {
@@ -147,6 +147,7 @@ const Address = ({
 function Checkout(props) {
     const auth = useSelector((state) => state.auth);
     const userAddress = useSelector((state) => state.address);
+    const order = useSelector((state) => state.order);
     const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
@@ -231,12 +232,19 @@ function Checkout(props) {
             paymentType: "cod",
         };
 
-        console.log("???????", payload);
+        console.log("order Payload", payload);
+        dispatch(addOrder(payload));
         setConfirmOrder(true);
     };
 
     console.log(">>", newAddress);
     console.log(">>>", orderSummary);
+
+    useEffect(() => {
+        if (confirmOrder && order.placedOrderId) {
+            props.history.push(`/order_details/${order.placedOrderId}`);
+        }
+    }, [order.placedOrderId]);
 
     return (
         <Layout>
