@@ -8,6 +8,7 @@ import { isUserLoggedIn } from "./actions/user";
 import ProductDetails from "./containers/ProductDetailsPage/ProductDetails";
 import Cart from "./containers/CartPage/Cart";
 import { updateCart } from "./actions/cart";
+import Checkout from "./containers/CheckoutPage/Checkout";
 
 function App() {
     const dispatch = useDispatch();
@@ -19,13 +20,15 @@ function App() {
         }
     }, [auth.authenticate]);
 
+    //Component did update (component did mount)
     useEffect(() => {
         dispatch(updateCart());
-    }, []);
+    }, [auth.authenticate]);
 
     return (
         <div className="app">
             <Switch>
+                <Route path="/checkout" component={Checkout} />
                 <Route path="/cart" component={Cart} />
                 <Route
                     path="/:produtSlug/:productId/p"

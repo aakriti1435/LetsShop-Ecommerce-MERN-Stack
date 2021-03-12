@@ -10,6 +10,7 @@ import productRoutes from "./routes/product.js";
 import cartRoutes from "./routes/cart.js";
 import initialDataRoutes from "./routes/admin/initialData.js";
 import pageRoutes from "./routes/admin/page.js";
+import addressRoutes from "./routes/address.js";
 import path from "path";
 
 const app = express();
@@ -44,6 +45,7 @@ app.use("/api", productRoutes);
 app.use("/api", cartRoutes);
 app.use("/api", initialDataRoutes);
 app.use("/api", pageRoutes);
+app.use("/api", addressRoutes);
 
 //API Calls
 app.get("/", (req, res, next) => {
