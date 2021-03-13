@@ -3,11 +3,18 @@ import Layout from "../../components/Layout/Layout";
 import Card from "../../components/GenericUI/Card/Card";
 import { useDispatch, useSelector } from "react-redux";
 import "./Orders.css";
+import { updateOrder } from "../../actions/order";
 
 function Orders(props) {
     const order = useSelector((state) => state.order);
     const [type, setType] = useState("");
     const dispatch = useDispatch();
+
+    const onOrderUpdate = (orderId) => {
+        const payload = { orderId, type };
+        console.log(payload);
+        dispatch(updateOrder(payload));
+    };
 
     const formatDate = (date) => {
         if (date) {
@@ -129,7 +136,10 @@ function Orders(props) {
                                 boxSizing: "border-box",
                             }}
                         >
-                            <button style={{ border: "1px solid darkgrey" }}>
+                            <button
+                                onClick={() => onOrderUpdate(orderItem._id)}
+                                style={{ border: "1px solid darkgrey" }}
+                            >
                                 Confirm
                             </button>
                         </div>

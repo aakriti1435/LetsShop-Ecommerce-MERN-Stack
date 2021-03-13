@@ -30,6 +30,27 @@ export default (state = initialState, action) => {
                 error: action.payload.error,
             };
             break;
+        case orderConstants.UPDATE_CUSTOMER_ORDER_REQUEST:
+            state = {
+                ...state,
+                loading: true,
+            };
+            break;
+
+        case orderConstants.UPDATE_CUSTOMER_ORDER_SUCCESS:
+            state = {
+                ...state,
+                loading: false,
+            };
+            break;
+
+        case orderConstants.UPDATE_CUSTOMER_ORDER_FAILURE:
+            state = {
+                ...state,
+                loading: false,
+                error: action.payload.error,
+            };
+            break;
     }
     return state;
 };
