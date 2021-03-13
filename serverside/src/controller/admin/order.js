@@ -21,3 +21,10 @@ export const updateOrder = (req, res) => {
         }
     });
 };
+
+export const getCustomerOrders = async (req, res) => {
+    const orders = await Order.find({})
+        .populate("items.productId", "name")
+        .exec();
+    res.status(200).json({ orders });
+};
