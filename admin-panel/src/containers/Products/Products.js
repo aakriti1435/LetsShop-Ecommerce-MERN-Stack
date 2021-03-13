@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from "react-redux";
 import {
     addCategory,
     addProduct,
+    deleteProductById,
     getAllCategories,
 } from "../../actions/actions";
 import Input from "../../components/GenericUI/Input";
@@ -209,17 +210,33 @@ function Products() {
                 <tbody>
                     {product && product.products.length > 0
                         ? product.products.map((p) => (
-                              <tr
-                                  style={{ cursor: "pointer" }}
-                                  onClick={() => handleShowPDModal(p)}
-                                  key={p._id}
-                              >
+                              <tr key={p._id}>
                                   <td>{p._id}</td>
                                   <td>{p.name}</td>
                                   <td>{p.price}</td>
                                   <td>{p.quantity}</td>
                                   <td>{p.category.name}</td>
-                                  <td>--</td>
+                                  <td className="tdd">
+                                      <button
+                                          style={{ cursor: "pointer" }}
+                                          onClick={() => handleShowPDModal(p)}
+                                      >
+                                          DETAILS
+                                      </button>
+                                      <button
+                                          onClick={() => {
+                                              const payload = {
+                                                  productId: p._id,
+                                              };
+                                              console.log("payload ", payload);
+                                              dispatch(
+                                                  deleteProductById(payload)
+                                              );
+                                          }}
+                                      >
+                                          DELETE
+                                      </button>
+                                  </td>
                               </tr>
                           ))
                         : null}
