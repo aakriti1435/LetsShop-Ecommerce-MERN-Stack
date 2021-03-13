@@ -11,10 +11,10 @@ function Rating(props) {
                 fontWeight: "400",
                 fontSize: "12px",
                 borderRadius: "3px",
-                padding: "2px 5px",
+                padding: "4px 7px",
             }}
         >
-            {props.value} <IoIosStar />
+            {props.value} <IoIosStar style={{ marginBottom: "-2px" }} />
         </span>
     );
 }

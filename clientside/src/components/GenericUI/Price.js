@@ -10,7 +10,7 @@ function Price(props) {
                 margin: "5px 0",
             }}
         >
-            <BiRupee />
+            <BiRupee style={{ marginBottom: "-3px", fontSize: "16px" }} />
             {props.value}
         </div>
     );

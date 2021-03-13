@@ -7,6 +7,7 @@ import { getOrder } from "../../actions/order";
 import { generatePublicUrl } from "../../urlConfig";
 import { Breed } from "../../components/MUIComponents/MUIComponents";
 import { IoIosArrowForward } from "react-icons/io";
+import Price from "../../components/GenericUI/Price";
 
 function OrderDetails(props) {
     const dispatch = useDispatch();
@@ -162,6 +163,7 @@ function OrderDetails(props) {
                                 <div className="delItemName">
                                     {item.productId.name}
                                 </div>
+                                <Price value={item.payablePrice} />
                             </div>
                         </div>
                         <div style={{ padding: "25px 50px" }}>

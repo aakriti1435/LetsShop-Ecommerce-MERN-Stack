@@ -5,6 +5,9 @@ import { MUIButton } from "../../../components/MUIComponents/MUIComponents";
 import Card from "../../../components/GenericUI/Card/Card";
 import { generatePublicUrl } from "../../../urlConfig";
 import { Link } from "react-router-dom";
+import Rating from "../../../components/GenericUI/Rating";
+import Price from "../../../components/GenericUI/Price";
+
 import "./ProductStore.css";
 
 const ProductStore = (props) => {
@@ -71,7 +74,7 @@ const ProductStore = (props) => {
                                             {product.name}
                                         </div>
                                         <div>
-                                            <span>4.3</span>
+                                            <Rating value="4.3" />
                                             &nbsp;&nbsp;
                                             <span
                                                 style={{
@@ -84,7 +87,7 @@ const ProductStore = (props) => {
                                             </span>
                                         </div>
                                         <div className="productPrice">
-                                            {product.price}
+                                            <Price value={product.price} />
                                         </div>
                                     </div>
                                 </Link>
