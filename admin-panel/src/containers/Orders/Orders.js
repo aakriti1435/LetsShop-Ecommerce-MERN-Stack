@@ -29,7 +29,7 @@ function Orders(props) {
             {order.orders.map((orderItem, index) => (
                 <Card
                     style={{
-                        margin: "10px 0",
+                        margin: "15px 0",
                     }}
                     key={index}
                     headerleft={`Order ID:  ${orderItem._id}`}
