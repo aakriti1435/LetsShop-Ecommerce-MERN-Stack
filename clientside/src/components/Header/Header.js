@@ -186,7 +186,7 @@ function Header() {
                                     }
                                 />
                                 <MUIButton
-                                    title={"LOGIN"}
+                                    title={signup ? "REGISTER" : "LOGIN"}
                                     bgColor="#fb641b"
                                     textColor="#ffffff"
                                     style={{

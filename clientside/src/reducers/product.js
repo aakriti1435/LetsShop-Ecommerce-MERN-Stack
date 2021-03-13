@@ -14,6 +14,7 @@ const initialState = {
     },
     pageRequest: false,
     page: {},
+    priceRange: {},
     productDetails: {},
 };
 
@@ -33,6 +34,7 @@ export default (state = initialState, action) => {
                 productsByPrice: {
                     ...action.payload.productsByPrice,
                 },
+                priceRange: action.payload.priceRange,
             };
             break;
 
