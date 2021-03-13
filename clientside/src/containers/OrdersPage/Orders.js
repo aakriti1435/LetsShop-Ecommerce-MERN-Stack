@@ -52,10 +52,22 @@ function Orders(props) {
                                         {item.productId.name}
                                     </div>
                                     <div className="orderPrice">
-                                        <BiRupee style={{ fontSize: "15px" }} />
+                                        <BiRupee
+                                            style={{
+                                                fontSize: "15px",
+                                                marginTop: "2px",
+                                            }}
+                                        />
                                         {item.payablePrice}
                                     </div>
-                                    <div className="orderStatus">
+                                    <div
+                                        className="orderStatus"
+                                        style={{
+                                            width: "200px",
+                                            background: "none",
+                                            marginTop: "5px",
+                                        }}
+                                    >
                                         <span>Order Status: &nbsp;</span>
                                         {order.paymentStatus}
                                     </div>
