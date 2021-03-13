@@ -35,3 +35,7 @@
     margin-right: 10px;
     font-size: 18px;
 }
+
+.cardHeader {
+    padding: 10px 10px !important;
+}
