@@ -19,7 +19,7 @@ router.get("/user/getCartItems", requireSignIn, userMiddleware, getCartItems);
 
 router.post(
     "/user/cart/removeItem",
-    requireSignin,
+    requireSignIn,
     userMiddleware,
     removeCartItem
 );
