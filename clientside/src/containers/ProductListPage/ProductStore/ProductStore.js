@@ -5,19 +5,16 @@ import { MUIButton } from "../../../components/MUIComponents/MUIComponents";
 import Card from "../../../components/GenericUI/Card/Card";
 import { generatePublicUrl } from "../../../urlConfig";
 import { Link } from "react-router-dom";
+import Rating from "../../../components/GenericUI/Rating";
+import Price from "../../../components/GenericUI/Price";
+
 import "./ProductStore.css";
 
 const ProductStore = (props) => {
     const product = useSelector((state) => state.product);
     const dispatch = useDispatch();
 
-    const [priceRange, setPriceRange] = useState({
-        under5k: 5000,
-        under10k: 10000,
-        under15k: 15000,
-        under20k: 20000,
-        under30k: 30000,
-    });
+    const priceRange = product.priceRange;
 
     useEffect(() => {
         const { match } = props;
@@ -71,7 +68,7 @@ const ProductStore = (props) => {
                                             {product.name}
                                         </div>
                                         <div>
-                                            <span>4.3</span>
+                                            <Rating value="4.3" />
                                             &nbsp;&nbsp;
                                             <span
                                                 style={{
@@ -84,7 +81,7 @@ const ProductStore = (props) => {
                                             </span>
                                         </div>
                                         <div className="productPrice">
-                                            {product.price}
+                                            <Price value={product.price} />
                                         </div>
                                     </div>
                                 </Link>

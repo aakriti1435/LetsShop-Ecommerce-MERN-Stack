@@ -5,7 +5,7 @@ import Card from "../../components/GenericUI/Card/Card";
 import "./Cart.css";
 import { MUIButton } from "../../components/MUIComponents/MUIComponents";
 import CartItem from "./CartItem/CartItem";
-import { addToCart, getCartItems } from "../../actions/cart";
+import { addToCart, getCartItems, removeCartItem } from "../../actions/cart";
 import PriceDetails from "../../components/PriceDetails/PriceDetails";
 
 function Cart(props) {
@@ -35,6 +35,11 @@ function Cart(props) {
         console.log(_id, qty);
         const { name, price, img } = cartItems[_id];
         dispatch(addToCart({ _id, name, price, img }, -1));
+    };
+
+    const onRemoveCartItem = (_id) => {
+        console.log("_id", _id);
+        dispatch(removeCartItem({ productId: _id }));
     };
 
     if (props.onlyCartItems) {
@@ -69,6 +74,7 @@ function Cart(props) {
                             cartItem={cartItems[key]}
                             onQtyIncrement={onQtyIncrement}
                             onQtyDecrement={onQtyDecrement}
+                            onRemoveCartItem={onRemoveCartItem}
                         />
                     ))}
 

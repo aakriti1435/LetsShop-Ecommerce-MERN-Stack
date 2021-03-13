@@ -16,6 +16,16 @@ export const signup = (user) => {
                 type: registerConstants.REGISTRATION_SUCCESS,
                 payload: { message },
             });
+            const { token, user } = res.data;
+            localStorage.setItem("token", token);
+            localStorage.setItem("user", JSON.stringify(user));
+            dispatch({
+                type: loginConstants.LOGIN_SUCCESS,
+                payload: {
+                    token,
+                    user,
+                },
+            });
         } else {
             if (res.status === 400) {
                 dispatch({

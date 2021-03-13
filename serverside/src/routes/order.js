@@ -8,6 +8,6 @@ router.post("/addOrder", requireSignIn, userMiddleware, addOrder);
 
 router.get("/getOrders", requireSignIn, userMiddleware, getOrders);
 
-router.get("/getOrder", requireSignIn, userMiddleware, getOrder);
+router.post("/getOrder", requireSignIn, userMiddleware, getOrder);
 
 export default router;

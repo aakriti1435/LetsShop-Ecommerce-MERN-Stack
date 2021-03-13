@@ -35,3 +35,11 @@
     max-height: 100%;
     object-fit: contain;
 }
+
+.tdd button {
+    width: 80px;
+    border: 1px solid black;
+    margin: 5px 5px;
+    font-size: 15px;
+    padding: 5px 10px;
+}

@@ -9,7 +9,8 @@ import {
 } from "../MUIComponents/MUIComponents";
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
-import { login, signout } from "../../actions/user";
+import { login, signout, signup as _signup } from "../../actions/user";
+import Cart from "../GenericUI/Cart";
 
 function Header() {
     const [loginModal, setLoginModal] = useState(false);
@@ -21,11 +22,29 @@ function Header() {
     const [error, setError] = useState("");
 
     const auth = useSelector((state) => state.auth);
+    const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
+    const userSignup = () => {
+        const user = { firstName, lastName, email, password };
+        if (
+            firstName === "" ||
+            lastName === "" ||
+            email === "" ||
+            password === ""
+        )
+            return;
+
+        dispatch(_signup(user));
+    };
+
     const userLogin = () => {
-        const user = { email, password };
-        dispatch(login(user));
+        if (signup) {
+            userSignup();
+        } else {
+            const user = { email, password };
+            dispatch(login(user));
+        }
     };
 
     const userLogout = () => {
@@ -70,7 +89,10 @@ function Header() {
                 menu={
                     <a
                         className="loginButton"
-                        onClick={() => setLoginModal(true)}
+                        onClick={() => {
+                            setSignup(false);
+                            setLoginModal(true);
+                        }}
                     >
                         Login
                     </a>
@@ -99,6 +121,7 @@ function Header() {
                         <span>New Customer?</span>
                         <a
                             onClick={() => {
+                                setSignup(true);
                                 setLoginModal(true);
                             }}
                             style={{ color: "#2874f0" }}
@@ -127,23 +150,31 @@ function Header() {
                         </div>
                         <div className="rightspace">
                             <div className="loginInputContainer">
-                                {/* <MUIInput
-                                    type="text"
-                                    label="First Name"
-                                    value={firstName}
-                                    onChange={(e) =>
-                                        setFirstName(e.target.value)
-                                    }
-                                />
-
-                                <MUIInput
-                                    type="text"
-                                    label="Last Name"
-                                    value={lastName}
-                                    onChange={(e) =>
-                                        setLastName(e.target.value)
-                                    }
-                                /> */}
+                                {auth.error && (
+                                    <div style={{ color: "red", fontSize: 12 }}>
+                                        {auth.error}
+                                    </div>
+                                )}
+                                {signup && (
+                                    <MUIInput
+                                        type="text"
+                                        label="First Name"
+                                        value={firstName}
+                                        onChange={(e) =>
+                                            setFirstName(e.target.value)
+                                        }
+                                    />
+                                )}
+                                {signup && (
+                                    <MUIInput
+                                        type="text"
+                                        label="Last Name"
+                                        value={lastName}
+                                        onChange={(e) =>
+                                            setLastName(e.target.value)
+                                        }
+                                    />
+                                )}
 
                                 <MUIInput
                                     type="text"
@@ -160,7 +191,7 @@ function Header() {
                                     }
                                 />
                                 <MUIButton
-                                    title={"LOGIN"}
+                                    title={signup ? "REGISTER" : "LOGIN"}
                                     bgColor="#fb641b"
                                     textColor="#ffffff"
                                     style={{
@@ -241,7 +272,7 @@ function Header() {
                     />
                     <div>
                         <a href={`/cart`} className="cart">
-                            <IoIosCart />
+                            <Cart count={Object.keys(cart.cartItems).length} />
                             <span style={{ margin: "0 10px" }}>Cart</span>
                         </a>
                     </div>
