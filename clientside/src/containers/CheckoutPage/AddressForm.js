@@ -66,9 +66,37 @@ function AddressForm(props) {
             payload.address._id = id;
         }
         dispatch(addAddress(payload));
-        if (!props.withoutLayout) props.setNewAddress(false);
+        // if (!props.withoutLayout) props.setNewAddress(false);
         setSubmitFlag(true);
     };
+
+    useEffect(() => {
+        // console.log("addressCount", user.address);
+        if (submitFlag) {
+            // console.log("where are we", user);
+            let _address = {};
+            if (id) {
+                _address = {
+                    _id: id,
+                    name,
+                    mobileNumber,
+                    pinCode,
+                    locality,
+                    address,
+                    cityDistrictTown,
+                    state,
+                    landmark,
+                    alternatePhone,
+                    addressType,
+                };
+            } else {
+                _address = userAddress.address.slice(
+                    userAddress.address.length - 1
+                )[0];
+            }
+            props.onSubmitForm(_address);
+        }
+    }, [userAddress.address]);
 
     const renderAddressForm = () => {
         return (

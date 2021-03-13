@@ -9,6 +9,7 @@ import ProductDetails from "./containers/ProductDetailsPage/ProductDetails";
 import Cart from "./containers/CartPage/Cart";
 import { updateCart } from "./actions/cart";
 import Checkout from "./containers/CheckoutPage/Checkout";
+import Orders from "./containers/OrdersPage/Orders";
 
 function App() {
     const dispatch = useDispatch();
@@ -28,6 +29,7 @@ function App() {
     return (
         <div className="app">
             <Switch>
+                <Route path="/account/orders" component={Orders} />
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/cart" component={Cart} />
                 <Route

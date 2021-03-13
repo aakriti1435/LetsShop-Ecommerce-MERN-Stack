@@ -4,10 +4,11 @@ import axios from "../helpers/axios";
 export const getAddress = () => {
     return async (dispatch) => {
         try {
+            dispatch({ type: addressConstants.GET_USER_ADDRESS_REQUEST });
+
             const res = await axios.get(`/user/getAddress`);
             console.log(res);
 
-            dispatch({ type: addressConstants.GET_USER_ADDRESS_REQUEST });
             if (res.status === 200) {
                 const {
                     userAddress: { address },
@@ -32,10 +33,11 @@ export const getAddress = () => {
 export const addAddress = (payload) => {
     return async (dispatch) => {
         try {
+            dispatch({ type: addressConstants.ADD_USER_ADDRESS_REQUEST });
+
             const res = await axios.post(`/user/address/create`, { payload });
             console.log(res);
 
-            dispatch({ type: addressConstants.ADD_USER_ADDRESS_REQUEST });
             if (res.status === 201) {
                 console.log(res);
                 const {

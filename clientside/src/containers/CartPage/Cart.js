@@ -37,6 +37,23 @@ function Cart(props) {
         dispatch(addToCart({ _id, name, price, img }, -1));
     };
 
+    if (props.onlyCartItems) {
+        return (
+            <>
+                <div style={{ padding: "15px" }}>
+                    {Object.keys(cartItems).map((key, index) => (
+                        <CartItem
+                            key={index}
+                            cartItem={cartItems[key]}
+                            onQtyIncrement={onQtyIncrement}
+                            onQtyDecrement={onQtyDecrement}
+                        />
+                    ))}
+                </div>
+            </>
+        );
+    }
+
     return (
         <Layout>
             <div className="cartContainer" style={{ alignItems: "flex-start" }}>
