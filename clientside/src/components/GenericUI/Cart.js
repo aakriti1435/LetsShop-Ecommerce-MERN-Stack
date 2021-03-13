@@ -21,7 +21,7 @@ function Cart(props) {
             >
                 {props.count}
             </span>
-            <IoIosCart />
+            <IoIosCart style={{ marginBottom: "-3px" }} />
         </div>
     );
 }

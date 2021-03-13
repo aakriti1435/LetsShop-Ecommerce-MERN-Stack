@@ -150,6 +150,11 @@ function Header() {
                         </div>
                         <div className="rightspace">
                             <div className="loginInputContainer">
+                                {auth.error && (
+                                    <div style={{ color: "red", fontSize: 12 }}>
+                                        {auth.error}
+                                    </div>
+                                )}
                                 {signup && (
                                     <MUIInput
                                         type="text"
