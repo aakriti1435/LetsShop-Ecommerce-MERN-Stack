@@ -10,6 +10,7 @@ import {
 import { useDispatch, useSelector } from "react-redux";
 import "./Header.css";
 import { login, signout, signup as _signup } from "../../actions/user";
+import Cart from "../GenericUI/Cart";
 
 function Header() {
     const [loginModal, setLoginModal] = useState(false);
@@ -21,6 +22,7 @@ function Header() {
     const [error, setError] = useState("");
 
     const auth = useSelector((state) => state.auth);
+    const cart = useSelector((state) => state.cart);
     const dispatch = useDispatch();
 
     const userSignup = () => {
@@ -265,7 +267,7 @@ function Header() {
                     />
                     <div>
                         <a href={`/cart`} className="cart">
-                            <IoIosCart />
+                            <Cart count={Object.keys(cart.cartItems).length} />
                             <span style={{ margin: "0 10px" }}>Cart</span>
                         </a>
                     </div>
