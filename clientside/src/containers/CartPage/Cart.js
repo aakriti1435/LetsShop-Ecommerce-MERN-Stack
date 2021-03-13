@@ -37,6 +37,11 @@ function Cart(props) {
         dispatch(addToCart({ _id, name, price, img }, -1));
     };
 
+    const onRemoveCartItem = (_id) => {
+        console.log("_id", _id);
+        // dispatch(removeCartItem({ productId: _id }));
+    };
+
     if (props.onlyCartItems) {
         return (
             <>
@@ -69,6 +74,7 @@ function Cart(props) {
                             cartItem={cartItems[key]}
                             onQtyIncrement={onQtyIncrement}
                             onQtyDecrement={onQtyDecrement}
+                            onRemoveCartItem={onRemoveCartItem}
                         />
                     ))}
 

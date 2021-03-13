@@ -1,5 +1,9 @@
 import express from "express";
-import { addItemToCart, getCartItems } from "../controller/cart.js";
+import {
+    addItemToCart,
+    getCartItems,
+    removeCartItem,
+} from "../controller/cart.js";
 import { requireSignIn, userMiddleware } from "../common-middlewares/index.js";
 
 const router = express.Router();
@@ -12,5 +16,12 @@ router.post(
 );
 
 router.get("/user/getCartItems", requireSignIn, userMiddleware, getCartItems);
+
+router.post(
+    "/user/cart/removeItem",
+    requireSignin,
+    userMiddleware,
+    removeCartItem
+);
 
 export default router;
