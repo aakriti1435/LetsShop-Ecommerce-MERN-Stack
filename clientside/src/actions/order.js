@@ -7,8 +7,9 @@ export const getOrder = (payload) => {
         try {
             dispatch({ type: orderConstants.USER_ORDER_DETAILS_REQUEST });
 
-            const res = await axios.get(`/getOrder`, payload);
-            console.log(res);
+            console.log("payload", payload);
+            const res = await axios.post(`/getOrder`, payload);
+            console.log(">>>>>", res);
 
             if (res.status === 200) {
                 const { order } = res.data;

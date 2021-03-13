@@ -10,6 +10,7 @@ import Cart from "./containers/CartPage/Cart";
 import { updateCart } from "./actions/cart";
 import Checkout from "./containers/CheckoutPage/Checkout";
 import Orders from "./containers/OrdersPage/Orders";
+import OrderDetails from "./containers/OrderDetailsPage/OrderDetails";
 
 function App() {
     const dispatch = useDispatch();
@@ -29,6 +30,10 @@ function App() {
     return (
         <div className="app">
             <Switch>
+                <Route
+                    path="/order_details/:orderId"
+                    component={OrderDetails}
+                />
                 <Route path="/account/orders" component={Orders} />
                 <Route path="/checkout" component={Checkout} />
                 <Route path="/cart" component={Cart} />
